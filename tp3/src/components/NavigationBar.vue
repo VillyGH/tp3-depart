@@ -10,12 +10,6 @@
       >
       <router-link
         class="nav-link"
-        v-bind:class="{ active: $route.name == 'About' }"
-        v-bind:to="{ name: 'About' }"
-        >À propos</router-link
-      >
-      <router-link
-        class="nav-link"
         v-bind:class="{ active: $route.name == 'Profile' }"
         v-if="isLoggedIn"
         v-bind:to="{ name: 'Profile' }"

@@ -43,7 +43,7 @@ const actions = {
   },
   async register ({ commit }, profile) {
     try {
-      const token = await authService.postUser(profile)
+      const token = await authService.register(profile)
       commit('initializeAuthentication', token)
     } catch (error) {
       commit('setAuthServiceError', error.message)
