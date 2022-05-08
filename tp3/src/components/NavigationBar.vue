@@ -4,16 +4,9 @@
     <div class="navbar-nav mr-auto">
       <router-link
         class="nav-link"
-        v-bind:class="{ active: $route.name == 'Home' }"
-        v-bind:to="{ name: 'Home' }"
+        v-bind:class="{ active: $route.name == 'WelcomePage' }"
+        v-bind:to="{ name: 'WelcomePage' }"
         >Accueil</router-link
-      >
-      <router-link
-        class="nav-link"
-        v-bind:class="{ active: $route.name == 'Profile' }"
-        v-if="isLoggedIn"
-        v-bind:to="{ name: 'Profile' }"
-        >Profile</router-link
       >
     </div>
     <div class="navbar-nav ml-auto">

@@ -18,10 +18,9 @@ router.beforeEach((to, from, next) => {
       name: 'Login',
       query: { redirect: to.path }
     })
-    // Code en commentaire ci-dessous: voir note de cours "Conserver les données dans le navigateur"
   } else if (to.meta.authPage && store.getters['authentication/isLoggedIn']) {
     next({
-      name: 'Home'
+      name: 'WelcomePage'
     })
   } else {
     next()

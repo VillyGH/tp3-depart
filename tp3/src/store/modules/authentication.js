@@ -33,9 +33,9 @@ const mutations = {
 }
 
 const actions = {
-  async login ({ commit }, credential) {
+  async login ({ commit }, credentials) {
     try {
-      const token = await authService.getToken(credential)
+      const token = await authService.getToken(credentials)
       commit('initializeAuthentication', token)
     } catch (error) {
       commit('setAuthServiceError', error.message)

@@ -20,5 +20,5 @@ export default new Vuex.Store({
   modules: {
     authentication
   },
-  plugins: [vuexLocal.plugin] // Utilisation du plugin de persistence.
+  plugins: [vuexLocal.plugin]
 })

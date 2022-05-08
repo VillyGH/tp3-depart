@@ -1,47 +1,44 @@
 import axios from 'axios'
-import { postsJsonFake } from '@/../tests/data/postsJsonFake'
-import { postsService } from '@/services/postsService'
+import { authService } from '@/services/authService'
 import MockAdapter from 'axios-mock-adapter'
 
-// jest.mock('axios')
 var mockAxios = new MockAdapter(axios)
 
 const API = process.env.VUE_APP_API
-let posts
+
+let users
 
 beforeEach(() => {
-  posts = [...postsJsonFake]
+  users = [...usersJsonFake]
 
   mockAxios.reset() // Nécessaire pour avoir un historique vide pour chacun des tests.
 })
 
-describe('postsService.js', () => {
-  test("getPosts doit retourner l'ensemble des publications", async () => {
-    mockAxios.onGet(`${API}/posts`).reply(200, posts)
+describe('authService.js', () => {
+  test('getToken doit retourner un token valide', async () => {
+    const token = "$2a$04$oEnuRCQXlN1UyVfDJfh21eCfYmMRPj3k/iQmLus0eFuUk/h.OIazG"
+    const credentials = {
+      "email": "Branson35@hotmail.com",
+      "password": "2632976cad"
+    }
+    mockAxios.onGet(`${API}/api/login`, credentials).reply(200, token)
 
-    const response = await postsService.getPosts()
+    const response = await authService.getToken(credentials)
 
-    expect(response).toStrictEqual(posts)
+    expect(response).toStrictEqual(token)
   })
 
-  test('getPost doit retourner la publication associée au id', async () => {
-    const firstPost = posts[0]
-    mockAxios.onGet(`${API}/posts/${firstPost.id}`).reply(200, firstPost)
+  test('register doit retourner un token valide', async () => {
+    const token = "$2a$04$2663%634643"
+    const profile = {
+      "email": "Trystan.Murray@outlook.com",
+      "password": "myPassword135326",
+      "name": "Maxime Gagnon"
+    }
+    mockAxios.onGet(`${API}/api/register`).reply(201, token)
 
-    const response = await postsService.getPost(firstPost.id)
+    const response = await authService.register(profile)
 
-    expect(response).toStrictEqual(firstPost)
-  })
-  test("updatePost doit envoyer une requête put à l'api", async () => {
-    const firstPost = posts[0]
-    const expectedUrl = `${API}/posts/${firstPost.id}`
-    mockAxios.onPut(expectedUrl, firstPost).reply(204)
-
-    await postsService.updatePost(firstPost)
-
-    expect(mockAxios.history.put[0].url).toBe(expectedUrl)
-  })
-  test("addPost doit envoyer une requête post à l'api", async () => {
-    // TODO
+    expect(response).toStrictEqual(token)
   })
 })
