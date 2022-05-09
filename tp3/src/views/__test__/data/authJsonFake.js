@@ -8,6 +8,10 @@ export const authJsonFake = [
             "name": "Maxime Verstappen",
             "email": "maxVerstappen@outlook.com",
             "password": "godLife15862"
+        },
+        invalidLogin: {
+            "email": "idontExist@hotmail.com",
+            "password": "secretpassword"
         }
     }
 ]

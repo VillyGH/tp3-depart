@@ -4,9 +4,9 @@
       <b-form @submit.prevent="login">
         <h1>Connexion</h1>
         <label>Courriel</label>
-        <b-form-input required v-model="email" type="text" />
+        <b-form-input required v-model="email" id="email" type="text" />
         <label>Mot de passe</label>
-        <b-form-input required v-model="password" type="password" />
+        <b-form-input required v-model="password" id="password" type="password" />
         <b-button variant="primary" type="submit" class="mt-4"
           >Se connecter</b-button
         >

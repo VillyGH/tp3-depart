@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { authService } from '@/services/authService'
+import { Login } from '@/views/login/Login'
 import MockAdapter from 'axios-mock-adapter'
 import AuthJsonFake from '@/views/__test__/data/authJsonFake'
 
@@ -12,17 +12,14 @@ let auth
 beforeEach(() => {
   auth = [...AuthJsonFake]
 
-  mockAxios.reset() // Nécessaire pour avoir un historique vide pour chacun des tests.
+  mockAxios.reset()
 })
 
 describe('login.js', () => {
   test('Doit pouvoir envoyer les informations de l’authentification', async () => {
-    const login = {
-
-    }
-    const wrapper = await postDetailShallowMount({
+    const wrapper = await shallowMount(Login, {
       $router: {
-        push: () => {}
+        push: param => routerPush(param)
       }
     })
 
@@ -30,21 +27,64 @@ describe('login.js', () => {
 
     expect(store.dispatch).toHaveBeenCalledWith(
       'authentication/login',
-      login
+      auth.login
     )
   })
 
-  test('register doit retourner un token valide', async () => {
-    const token = "$2a$04$2663%634643"
-    const profile = {
-      "email": "Trystan.Murray@outlook.com",
-      "password": "myPassword135326",
-      "name": "Maxime Gagnon"
-    }
-    mockAxios.onGet(`${API}/api/register`).reply(201, token)
+  test('Doit quitter la page, après une authentification avec succès.', async () => {
+    // arrange
+    const routerPush = jest.fn()
 
-    const response = await authService.register(profile)
+    document.getElementById('email').innerHTML = auth.login.email
+    document.getElementById('password').innerHTML = auth.login.password
 
-    expect(response).toStrictEqual(token)
+    const wrapper = await shallowMount(Login, {
+      $router: {
+        push: param => routerPush(param)
+      }
+    })
+
+    await flushPromises()
+    // act
+    await wrapper.find('form').trigger('submit.prevent')
+    // assert
+    expect(routerPush).toHaveBeenCalledWith({ name: 'WelcomePage' })
+  })
+
+  test('Après une mauvaise authentification doit afficher un message d’erreur', async () => {
+    // arrange
+    const routerPush = jest.fn()
+
+    const wrapper = await shallowMount(Login, {
+      $router: {
+        push: param => routerPush(param)
+      }
+    })
+
+    await flushPromises()
+    // act
+    await wrapper.find('form').trigger('submit.prevent')
+    // assert
+    expect(routerPush).to({ name: 'WelcomePage' })
+  })
+
+  test('Après une authentification infructueuse, ne doit pas être redirigé vers une autre page', async () => {
+    // arrange
+    const routerPush = jest.fn()
+
+    document.getElementById('email').innerHTML = auth.invalidLogin.email
+    document.getElementById('password').innerHTML = auth.invalidLogin.password
+
+    const wrapper = await shallowMount(Login, {
+      $router: {
+        push: param => routerPush(param)
+      }
+    })
+
+    await flushPromises()
+    // act
+    await wrapper.find('form').trigger('submit.prevent')
+    // assert
+    expect(routerPush).not.toHaveBeenCalledWith({ name: 'WelcomePage' })
   })
 })
