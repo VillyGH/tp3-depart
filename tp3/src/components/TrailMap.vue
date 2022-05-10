@@ -1,6 +1,11 @@
 <template>
   <div class="">
-    <img v-bind:src="imageLikeUrl" style="width:100px;height:100px" alt="Like the trail image" onclick="likeTrail">
+    <img
+      v-bind:src="imageLikeUrl"
+      style="width:100px;height:100px"
+      alt="Like the trail image"
+      onclick="likeTrail"
+    />
     <p>{{ nbLikes }}</p>
     <p>{{ selectedTrail }}</p>
     <p>{{ selectedPark }}</p>
@@ -24,7 +29,7 @@ export default {
   },
   methods: {
     likeTrails () {
-      await this.$store.dispatch('posts/incrementLikeCountAction')
+      // await this.$store.dispatch('posts/incrementLikeCountAction')
     }
   }
 }

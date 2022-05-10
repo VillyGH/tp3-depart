@@ -11,8 +11,12 @@ const getters = {
     const trail = state.posts.find(post => post.id === id)
     return trail
   },
-  getTrails: state => {
-    return state.trails
+  getTrails: state => idOfPark => {
+    const trailList = state.trails.filter(function (trail) {
+      return trail.parkId === idOfPark
+    })
+    // console.log(trailList)
+    return trailList // state.trails */
   }
 }
 
@@ -36,7 +40,6 @@ const actions = {
   async getAllTrailAction ({ commit }) {
     try {
       const trails = await trailService.getTrails()
-      console.log(trails)
       commit('initialiseTrails', trails)
     } catch (error) {
       commit('setOnError')
