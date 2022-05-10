@@ -21,7 +21,6 @@ const getters = {
 
 const mutations = {
   initialiseTrails: (state, trails) => {
-    console.log(trails)
     state.trails = trails
     state.onError = false
   },
@@ -39,7 +38,6 @@ const actions = {
   async getAllTrailAction ({ commit }) {
     try {
       const trails = await trailService.getTrails()
-      console.log(trails)
       commit('initialiseTrails', trails)
     } catch (error) {
       // Il n'est pas nécessaire de relancer l'exception. Ce qui importe c'est que le composant soit informé que l'état de postStore est en erreur.

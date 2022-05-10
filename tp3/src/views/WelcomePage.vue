@@ -1,5 +1,6 @@
 <template>
   <div>
+    <ParkList />
     <TrailList />
     <TrailMap />
     <router-view />
@@ -7,11 +8,13 @@
 </template>
 
 <script>
+import ParkList from '@/components/ParkList'
 import TrailList from '@/components/TrailList'
 import TrailMap from '@/components/TrailMap'
 
 export default {
   components: {
+    ParkList,
     TrailList,
     TrailMap
   }
