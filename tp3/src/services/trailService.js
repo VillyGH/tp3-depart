@@ -17,5 +17,6 @@ async function getTrail (id) {
 
 export const trailService = {
   getTrails,
-  getTrail
+  getTrail,
+  likeTrail
 }

@@ -15,7 +15,6 @@
 <script>
 export default {
   name: 'TrailList',
-
   data () {
     return {
       theParkSelectedName: []

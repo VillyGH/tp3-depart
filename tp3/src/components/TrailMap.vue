@@ -11,7 +11,6 @@
 import uiTextPlugin from '../externalization/uiTextPlugin'
 export default {
   name: 'TrailMap',
-
   data () {
     return {
       imageLikeUrl: uiTextPlugin.imageLikeUrl,

@@ -1,4 +1,5 @@
 import { trailService } from '@/services/trailService'
+import tokenHelper from '@/shared/tokenHelper'
 
 const state = {
   trails: [],
@@ -25,6 +26,7 @@ const mutations = {
     state.trails.splice(index, 1, trail)
     state.trails = [...state.trails]
   },
+
   setOnError (state) {
     state.onError = true
   }
@@ -37,11 +39,24 @@ const actions = {
       console.log(trails)
       commit('initialiseTrails', trails)
     } catch (error) {
-      // Il n'est pas nécessaire de relancer l'exception. Ce qui importe c'est que le composant soit informé que l'état de postStore est en erreur.
-      // console.log(error)
       commit('setOnError')
     }
-  }
+  },
+  async likeTrail ({ commit }, id) {
+    try {
+      commit('initialiseTrails', trails)
+      await userService.likeTrail(id)
+    } catch (error) {
+      commit('setOnError')
+    }
+  },
+  async deleteTrail ({ commit }, id) {
+    try {
+      await userService.deleteTrail(id)
+    } catch (error) {
+      commit('setOnError')
+    }
+  },
 }
 
 export default {
