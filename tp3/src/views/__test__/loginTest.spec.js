@@ -15,7 +15,7 @@ beforeEach(() => {
   mockAxios.reset()
 })
 
-describe('login.js', () => {
+describe('Login.vue', () => {
   test('Doit pouvoir envoyer les informations de l’authentification', async () => {
     const wrapper = await shallowMount(Login, {
       $router: {
@@ -54,6 +54,9 @@ describe('login.js', () => {
   test('Après une mauvaise authentification doit afficher un message d’erreur', async () => {
     // arrange
     const routerPush = jest.fn()
+
+    document.getElementById('email').innerHTML = auth.invalidLogin.email
+    document.getElementById('password').innerHTML = auth.invalidLogin.password
 
     const wrapper = await shallowMount(Login, {
       $router: {
