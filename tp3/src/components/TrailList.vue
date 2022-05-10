@@ -4,9 +4,14 @@
       class="mt-2 form-select form-select-lg"
       name="shipNames"
       id="shipNames"
+      v-model="trail"
     >
-      <option class="form-option-lg">
-        park
+      <option
+        class="form-option-lg"
+        v-for="trail in trailsOfTheParkSelected"
+        v-bind:key="trail.id"
+      >
+        {{ trail.name }}
       </option>
     </select>
   </div>
@@ -18,12 +23,13 @@ export default {
 
   data () {
     return {
-      theParkSelectedName: []
+      trailsOfTheParkSelected: {},
+      trailSelected: {}
     }
   },
   async created () {
-    this.theParkSelectedName = this.$store.getters['trails/getAllTrailAction']()
     await this.$store.dispatch('trails/getAllTrailAction')
+    this.trailsOfTheParkSelected = this.$store.getters['trails/getTrails']('15') // changer le 15 pour l'id du park
   },
   methods: {}
 }

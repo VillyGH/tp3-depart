@@ -10,13 +10,18 @@ const getters = {
     const trail = state.posts.find(post => post.id === id)
     return trail
   },
-  getTrails: state => {
-    return state.trails
+  getTrails: state => idOfPark => {
+    const trailList = state.trails.filter(function (trail) {
+      return trail.parkId === idOfPark
+    })
+    // console.log(trailList)
+    return trailList // state.trails */
   }
 }
 
 const mutations = {
   initialiseTrails: (state, trails) => {
+    console.log(trails)
     state.trails = trails
     state.onError = false
   },
