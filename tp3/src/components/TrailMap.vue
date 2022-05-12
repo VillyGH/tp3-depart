@@ -1,15 +1,8 @@
 <template>
-  <div class="">
-    <img
-      v-bind:src="imageLikeUrl"
-      style="width:100px;height:100px"
-      alt="Like the trail image"
-      onclick="likeTrail"
-    />
-    <p>{{ nbLikes }}</p>
-    <p>{{ selectedTrail }}</p>
-    <p>{{ selectedPark }}</p>
-  </div>
+  <l-map style="height: 350px" :zoom="zoom" :center="center">
+    <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+    <l-polyline :lat-lngs="polyline.latlngs" :color="polyline.color"></l-polyline>
+  </l-map>
 </template>
 
 <script>
@@ -18,19 +11,13 @@ export default {
   name: 'TrailMap',
   data () {
     return {
-      imageLikeUrl: uiTextPlugin.imageLikeUrl,
-      nbLikes: 0,
-      selectedPark: '',
-      selectedTrail: ''
+      polylineColor: uiTextPlugin.polylineColor,
+      selectedLatlngs: []
     }
   },
   async created () {
-    this.selectedPark = ''
-  },
-  methods: {
-    likeTrails () {
-      // await this.$store.dispatch('posts/incrementLikeCountAction')
-    }
+    await this.$store.dispatch('trails/getTrailSegments')
+    this.selectedLatlngs = this.$store.getters['trails/getCurrentTrailSegments']
   }
 }
 </script>

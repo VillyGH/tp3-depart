@@ -10,12 +10,12 @@ async function getParks () {
   return response.data
 }
 
-async function getPark (id) {
+async function getParkById (id) {
   const response = await axios.get(`${API}/parks/${id}`)
   return response.data
 }
 
 export const parkService = {
   getParks,
-  getPark
+  getParkById
 }

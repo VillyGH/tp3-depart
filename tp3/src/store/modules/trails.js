@@ -1,22 +1,28 @@
 import { trailService } from '@/services/trailService'
-import tokenHelper from '@/shared/tokenHelper'
 
 const state = {
   trails: [],
+  currentTrailId: 0,
+  currentSegments: [],
   onError: false
 }
 
 const getters = {
   getTrailById: state => id => {
-    const trail = state.posts.find(post => post.id === id)
+    const trail = state.trails.find(trail => trail.id === id)
     return trail
   },
   getTrails: state => idOfPark => {
     const trailList = state.trails.filter(function (trail) {
       return trail.parkId === idOfPark
     })
-    // console.log(trailList)
-    return trailList // state.trails */
+    return trailList
+  },
+  getCurrentParkTrailId: state => {
+    return state.currentTrailId
+  },
+  getCurrentTrailSegments: state => {
+    return state.currentSegments;
   }
 }
 
@@ -30,7 +36,10 @@ const mutations = {
     state.trails.splice(index, 1, trail)
     state.trails = [...state.trails]
   },
-
+  initialiseSegments: (state, segments) => {
+    state.currentSegments = segments
+    state.onError = false
+  },
   setOnError (state) {
     state.onError = true
   }
@@ -45,21 +54,14 @@ const actions = {
       commit('setOnError')
     }
   },
-  async likeTrail ({ commit }, id) {
+  async getTrailSegmentsAction ({ commit }) {
     try {
-      commit('initialiseTrails', trails)
-      await userService.likeTrail(id)
+      const segments = await trailService.getTrailSegments(this.currentTrailId)
+      commit('setSegments', segments)
     } catch (error) {
       commit('setOnError')
     }
-  },
-  async deleteTrail ({ commit }, id) {
-    try {
-      await userService.deleteTrail(id)
-    } catch (error) {
-      commit('setOnError')
-    }
-  },
+  }
 }
 
 export default {

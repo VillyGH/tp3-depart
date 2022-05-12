@@ -1,5 +1,4 @@
 import { userService } from '@/services/userService'
-import authentication from './authentication'
 import tokenHelper from '@/shared/tokenHelper'
 
 const state = {
@@ -12,14 +11,14 @@ const getters = {
     const likes = state.user.find(post => post.id === id)
     return likes
   },
-  getCurrentUser: (state) => {
+  getCurrentUserId: (state) => {
     return tokenHelper.getUserId(state)
   }
 }
 
 const mutations = {
-  incrementLikeCount (state, userId, trailId) {
-    getCurrentUser(state)
+  incrementLikeCount (state, trailId) {
+    this.getCurrentUserId(state)
   },
   setOnError (state) {
     state.onError = true
@@ -41,7 +40,7 @@ const actions = {
     } catch (error) {
       commit('setOnError')
     }
-  },
+  }
 }
 
 export default {

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { authService } from '@/services/authService'
 import MockAdapter from 'axios-mock-adapter'
-import { authJsonFake } from '../../views/__test__/data/authJsonFake'
+import { authJsonFake } from '../../../tests/data/loginJsonFake'
 
 var mockAxios = new MockAdapter(axios)
 

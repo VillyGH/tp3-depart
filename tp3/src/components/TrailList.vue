@@ -2,8 +2,8 @@
   <div>
     <select
       class="mt-2 form-select form-select-lg"
-      name="shipNames"
-      id="shipNames"
+      name="trailNames"
+      id="trailNames"
       v-model="trail"
     >
       <option
@@ -28,7 +28,7 @@ export default {
   },
   async created () {
     await this.$store.dispatch('trails/getAllTrailAction')
-    this.trails = this.$store.getters['trails/getTrails']('15') // changer le 15 pour l'id du park
+    this.trails = this.$store.getters['trails/getCurrentParkTrails']
   },
   methods: {}
 }

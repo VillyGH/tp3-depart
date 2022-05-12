@@ -15,8 +15,13 @@ async function getTrail (id) {
   return response.data
 }
 
+async function getTrailSegments (id) {
+  const response = await axios.get(`${API}/segments/${id}`)
+  return response.data
+}
+
 export const trailService = {
   getTrails,
   getTrail,
-  likeTrail
+  getTrailSegments
 }
