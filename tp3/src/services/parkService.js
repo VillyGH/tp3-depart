@@ -15,7 +15,19 @@ async function getParkById (id) {
   return response.data
 }
 
+async function getParksOnline () {
+  const response = await axios.get(`${API}/api/parks`)
+  return response.data
+}
+
+async function getTrailsFromParkId (id) {
+  const response = await axios.get(`${API}/api/parks/${id}/trails`)
+  return response.data
+}
+
 export const parkService = {
   getParks,
-  getParkById
+  getParkById,
+  getParksOnline,
+  getTrailsFromParkId
 }

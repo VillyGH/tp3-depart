@@ -5,6 +5,7 @@
       name="shipNames"
       id="shipNames"
       v-model="park"
+      v-on:change="saveId()"
     >
       <option class="form-option-lg" v-for="park in parks" v-bind:key="park.id">
         {{ park.name }}
@@ -20,13 +21,18 @@ export default {
   data () {
     return {
       parks: [],
-      park: {}
+      park: []
     }
   },
   async created () {
-    await this.$store.dispatch('parks/getAllParkAction')
+    await this.$store.dispatch('parks/getAllParkApiAction')
     this.parks = this.$store.getters['parks/getParks']
   },
-  methods: {}
+  methods: {
+    saveId () {
+      console.log(this.park.id)
+      this.$store.mutations['parks/saveid']('1')
+    }
+  }
 }
 </script>
