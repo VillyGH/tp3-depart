@@ -2,8 +2,8 @@
   <div>
     <select
       class="mt-2 form-select form-select-lg"
-      name="shipNames"
-      id="shipNames"
+      name="parkNames"
+      id="parkNames"
       v-model="park"
       v-on:change="saveId()"
     >
@@ -36,3 +36,6 @@ export default {
   }
 }
 </script>
+
+
+
