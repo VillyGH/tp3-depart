@@ -22,14 +22,14 @@ export default {
   name: 'TrailList',
   data () {
     return {
+      trail: {},
       trails: [],
-      parkId: {},
-      trail: {}
+      parkId: 0
     }
   },
   async created () {
-    await this.$store.dispatch('trails/getAllTrailAction')
-    this.trails = this.$store.getters['trails/getCurrentParkTrails']
+    await this.$store.dispatch('trails/getAllParkTrailsAction')
+    this.trails = this.$store.getters['trails/getTrails']
   },
   methods: {}
 }

@@ -17,25 +17,21 @@
 <script>
 export default {
   name: 'ParkList',
-
   data () {
     return {
       parks: [],
-      park: []
+      park: {}
     }
   },
   async created () {
-    await this.$store.dispatch('parks/getAllParkApiAction')
+    await this.$store.dispatch('parks/getAllParkAction')
     this.parks = this.$store.getters['parks/getParks']
   },
   methods: {
     saveId () {
-      console.log(this.park.id)
-      this.$store.mutations['parks/saveid']('1')
+      console.log(this.park.id) // undefined
+      this.$store.mutations['parks/saveParkId'](this.park.id)
     }
   }
 }
 </script>
-
-
-

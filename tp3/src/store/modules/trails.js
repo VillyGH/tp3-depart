@@ -2,8 +2,8 @@ import { trailService } from '@/services/trailService'
 
 const state = {
   trails: [],
-  currentTrailId: 0,
-  currentSegments: [],
+  selectedTrailId: 0,
+  trailSegments: [],
   onError: false
 }
 
@@ -12,17 +12,14 @@ const getters = {
     const trail = state.trails.find(trail => trail.id === id)
     return trail
   },
-  getTrails: state => idOfPark => {
-    const trailList = state.trails.filter(function (trail) {
-      return trail.parkId === idOfPark
-    })
-    return trailList
+  getTrails: state => {
+    return state.trails
   },
-  getCurrentParkTrailId: state => {
-    return state.currentTrailId
+  getSelectedTrailId: state => {
+    return state.selectedTrailId
   },
-  getCurrentTrailSegments: state => {
-    return state.currentSegments;
+  getTrailSegments: state => {
+    return state.trailSegments
   }
 }
 
@@ -37,7 +34,7 @@ const mutations = {
     state.trails = [...state.trails]
   },
   initialiseSegments: (state, segments) => {
-    state.currentSegments = segments
+    state.trailSegments = segments
     state.onError = false
   },
   setOnError (state) {
@@ -46,9 +43,9 @@ const mutations = {
 }
 
 const actions = {
-  async getAllTrailAction ({ commit }) {
+  async getAllParkTrailsAction ({ commit }) {
     try {
-      const trails = await trailService.getTrails()
+      const trails = await trailService.getParkTrails(this.$store.getters['trails/getSelectedParkId'])
       commit('initialiseTrails', trails)
     } catch (error) {
       commit('setOnError')
@@ -57,7 +54,7 @@ const actions = {
   async getTrailSegmentsAction ({ commit }) {
     try {
       const segments = await trailService.getTrailSegments(this.currentTrailId)
-      commit('setSegments', segments)
+      commit('initialiseSegments', segments)
     } catch (error) {
       commit('setOnError')
     }

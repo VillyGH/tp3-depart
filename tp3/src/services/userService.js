@@ -11,11 +11,11 @@ async function likeTrail (userId, trailId) {
 }
 
 async function removeLikeTrail (id) {
-    const response = await axios.delete(`${API}/api/likes/${id}`)
-    return response.data
-  }
+  const response = await axios.delete(`${API}/api/likes/${id}`)
+  return response.data
+}
 
-export const authService = {
+export const userService = {
   likeTrail,
   removeLikeTrail
 }

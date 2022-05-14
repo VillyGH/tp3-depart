@@ -30,13 +30,7 @@ async function register (profile) {
   }
 }
 
-async function likeTrail (id) {
-  const response = await axios.get(`${API}/trails/${id}`)
-  return response.data
-}
-
 export const authService = {
   getToken,
-  register,
-  likeTrail
+  register
 }

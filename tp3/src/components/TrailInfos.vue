@@ -4,7 +4,7 @@
       v-bind:src="imageLikeUrl"
       style="width:100px;height:100px"
       alt="Like the trail image"
-      onclick="likeTrail"
+      v-on:click="onLikeClick"
     />
     <p>{{ nbLikes }}</p>
     <p>{{ selectedTrail }}</p>
@@ -18,18 +18,26 @@ export default {
   name: 'TrailInfos',
   data () {
     return {
-      imageLikeUrl: uiTextPlugin.imageLikeUrl,
+      imageLikeUrl: uiTextPlugin.imageLikeEmptyUrl,
       nbLikes: 0,
       selectedPark: '',
-      selectedTrail: ''
+      selectedTrail: '',
+      isLiked: false
     }
   },
   async created () {
-    this.selectedPark = ''
+    this.selectedParkName = this.$store.getters['trails/getSelectedParkId']
   },
   methods: {
-    likeTrails () {
-      // await this.$store.dispatch('posts/incrementLikeCountAction')
+    async onLikeClick () {
+      if (this.isLiked) {
+        await this.$store.dispatch('posts/likeTrail')
+        this.imageLikeUrl = uiTextPlugin.imageLikeFilledUrl
+      } else {
+        await this.$store.dispatch('posts/removeLikeTrail')
+        this.imageLikeUrl = uiTextPlugin.imageLikeEmptyUrl
+      }
+      this.isLiked = !this.isLiked
     }
   }
 }

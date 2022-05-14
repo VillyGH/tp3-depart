@@ -1,5 +1,12 @@
 export const uiTextPlugin = {
-  imageLikeUrl: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.JsZmLAs1DLqQVICPoeTleQHaHa%26pid%3DApi&f=1'
+  imageLikeFilledUrl: 'https://cdn-icons-png.flaticon.com/128/633/633991.png',
+  imageLikeEmptyUrl: 'https://cdn-icons-png.flaticon.com/128/126/126473.png',
+
+  // Map
+  mapUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  attribution: '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+  polylineDefaultColor: 'green'
+
 }
 
 // Plugin pour VueJs

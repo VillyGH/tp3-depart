@@ -1,42 +1,43 @@
 import { userService } from '@/services/userService'
-import tokenHelper from '@/shared/tokenHelper'
 
 const state = {
-  trails: [],
+  userlikes: [],
+  likeInfos: {},
   onError: false
 }
 
 const getters = {
-  getUserLikes: state => id => {
-    const likes = state.user.find(post => post.id === id)
-    return likes
+  getUserLikes: state => {
+    return state.userlikes
   },
-  getCurrentUserId: (state) => {
-    return tokenHelper.getUserId(state)
+  getLikeInfos: state => {
+    return state.likeInfos
   }
 }
 
 const mutations = {
-  incrementLikeCount (state, trailId) {
-    this.getCurrentUserId(state)
-  },
   setOnError (state) {
     state.onError = true
+  },
+  initialiseLikeInfos (state) {
+    state.likeInfos = {
+      userId: this.$store.getters['authentification/getTokenUserId'],
+      trailId: this.$store.getters['trails/getSelectedTrailId']
+    }
   }
 }
 
 const actions = {
-  async likeTrail ({ commit }, id) {
+  async likeTrail ({ commit }) {
     try {
-      commit('incrementLikeCount')
-      await userService.likeTrail(likeInfo)
+      await userService.likeTrail(this.likeInfos)
     } catch (error) {
       commit('setOnError')
     }
   },
-  async removeLikeTrail ({ commit }, id) {
+  async removeLikeTrail ({ commit }) {
     try {
-      await userService.removeLikeTrail(id)
+      await userService.removeLikeTrail(this.likeInfos.userId)
     } catch (error) {
       commit('setOnError')
     }
