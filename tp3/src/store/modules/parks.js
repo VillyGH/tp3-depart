@@ -15,7 +15,7 @@ const getters = {
     return state.parks
   },
   getSelectedParkId () {
-    // console.log(state.selectedParkId)
+    console.log(state.selectedParkId)
     return state.selectedParkId
   }
 }
@@ -25,10 +25,9 @@ const mutations = {
     state.parks = parks
     state.onError = false
   },
-  saveParkId (state, index, getters) {
+  saveParkId (state, index) {
     state.selectedParkId = state.parks[index].id
-    const temp = getters.selectedParkId
-    console.log(temp)
+    console.log(state.selectedParkId)
   },
   updatePark: (state, park) => {
     const index = state.parks.findIndex(t => t.id === park.id)

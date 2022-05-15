@@ -18,8 +18,8 @@ export default {
   components: {
     ParkList,
     TrailList,
-    TrailMap,
-    TrailInfos
+    TrailInfos,
+    TrailMap
   }
 }
 </script>

@@ -48,7 +48,7 @@ const mutations = {
 const actions = {
   async getAllParkTrailsAction ({ commit, rootGetters }) {
     try {
-      // console.log(rootGetters['parks/getSelectedParkId']) //
+      // console.log(rootGetters['parks/getSelectedParkId'])
       const trails = await trailService.getParkTrails(rootGetters['parks/getSelectedParkId'])
       commit('initialiseTrails', trails)
     } catch (error) {

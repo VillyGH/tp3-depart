@@ -21,8 +21,7 @@ export default {
     return {
       selectedIndex: 0,
       firstTrail: {},
-      trail: {},
-      trails: []
+      trail: {}
     }
   },
   async created () {
@@ -38,6 +37,9 @@ export default {
     }
   },
   computed: {
+    trails () {
+      return this.$store.state.trails.trails
+    },
     onError () {
       return this.$store.state.trails.onError
     }

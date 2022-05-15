@@ -21,7 +21,6 @@ export default {
     return {
       selectedIndex: 0,
       firstPark: {},
-      parks: [],
       park: {}
     }
   },
@@ -35,6 +34,14 @@ export default {
     saveId (event) {
       this.selectedIndex = event.target.options.selectedIndex
       this.$store.commit('parks/saveParkId', this.selectedIndex)
+    }
+  },
+  computed: {
+    parks () {
+      return this.$store.state.parks.parks
+    },
+    onError () {
+      return this.$store.state.parks.onError
     }
   }
 }
