@@ -4,8 +4,8 @@
       class="mt-2 form-select form-select-lg"
       name="parkNames"
       id="parkNames"
-      v-model="park"
-      v-on:change="saveId()"
+      v-model="firstPark"
+      v-on:change="saveId($event)"
     >
       <option class="form-option-lg" v-for="park in parks" v-bind:key="park.id">
         {{ park.name }}
@@ -19,6 +19,8 @@ export default {
   name: 'ParkList',
   data () {
     return {
+      selectedIndex: 0,
+      firstPark: {},
       parks: [],
       park: {}
     }
@@ -26,11 +28,13 @@ export default {
   async created () {
     await this.$store.dispatch('parks/getAllParkAction')
     this.parks = this.$store.getters['parks/getParks']
+    this.firstPark = this.parks[0].name
+    this.$store.commit('parks/saveParkId', this.selectedIndex)
   },
   methods: {
-    saveId () {
-      console.log(this.park.id) // undefined
-      this.$store.mutations['parks/saveParkId'](this.park.id)
+    saveId (event) {
+      this.selectedIndex = event.target.options.selectedIndex
+      this.$store.commit('parks/saveParkId', this.selectedIndex)
     }
   }
 }

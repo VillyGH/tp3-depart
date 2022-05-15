@@ -12,6 +12,9 @@ const getters = {
   },
   getLikeInfos: state => {
     return state.likeInfos
+  },
+  isTrailLiked: state => {
+    return state.userlikes
   }
 }
 
@@ -28,16 +31,23 @@ const mutations = {
 }
 
 const actions = {
-  async likeTrail ({ commit }) {
+  async likeTrailAction ({ commit }) {
     try {
       await userService.likeTrail(this.likeInfos)
     } catch (error) {
       commit('setOnError')
     }
   },
-  async removeLikeTrail ({ commit }) {
+  async removeLikeTrailAction ({ commit }) {
     try {
       await userService.removeLikeTrail(this.likeInfos.userId)
+    } catch (error) {
+      commit('setOnError')
+    }
+  },
+  async getUserLikesAction ({ commit }) {
+    try {
+      await userService.getUserLikes(this.likeInfos.userId)
     } catch (error) {
       commit('setOnError')
     }

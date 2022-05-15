@@ -11,7 +11,7 @@ async function getParks () {
 }
 
 async function getParkById (id) {
-  const response = await axios.get(`${API}/parks/${id}`)
+  const response = await axios.get(`${API}/api/parks/${id}`)
   return response.data
 }
 

@@ -1,25 +1,12 @@
 <template>
   <div>
-    <ParkList />
-    <TrailList />
-    <TrailInfos  />
-    <TrailMap />
     <router-view />
+    <p class="ml-5 mt-5">Bienvenue dans mon site !</p>
   </div>
 </template>
 
 <script>
-import ParkList from '@/components/ParkList'
-import TrailList from '@/components/TrailList'
-import TrailMap from '@/components/TrailMap'
-import TrailInfos from '../components/TrailInfos.vue'
 
 export default {
-  components: {
-    ParkList,
-    TrailList,
-    TrailMap,
-    TrailInfos
-  }
 }
 </script>

@@ -8,9 +8,16 @@
         v-bind:to="{ name: 'WelcomePage' }"
         >Accueil</router-link
       >
+      <router-link
+        class="nav-link ml-5"
+        v-if="isLoggedIn"
+        v-bind:class="{ active: $route.name == 'Map' }"
+        v-bind:to="{ name: 'Map' }"
+        >Carte</router-link
+      >
     </div>
     <div class="navbar-nav ml-auto">
-      <b-link @click="logout" v-if="isLoggedIn" class="nav-link">
+      <b-link @click="logout" v-if="isLoggedIn" class="nav-link logout">
         Se déconnecter
       </b-link>
 

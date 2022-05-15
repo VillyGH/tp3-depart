@@ -28,6 +28,9 @@ const mutations = {
     state.trails = trails
     state.onError = false
   },
+  saveTrailId (state, index) {
+    state.selectedTrailId = state.trails[index].id
+  },
   updateTrail: (state, trail) => {
     const index = state.trails.findIndex(t => t.id === trail.id)
     state.trails.splice(index, 1, trail)
@@ -43,9 +46,10 @@ const mutations = {
 }
 
 const actions = {
-  async getAllParkTrailsAction ({ commit }) {
+  async getAllParkTrailsAction ({ commit, rootGetters }) {
     try {
-      const trails = await trailService.getParkTrails(this.$store.getters['trails/getSelectedParkId'])
+      // console.log(rootGetters['parks/getSelectedParkId']) //
+      const trails = await trailService.getParkTrails(rootGetters['parks/getSelectedParkId'])
       commit('initialiseTrails', trails)
     } catch (error) {
       commit('setOnError')
@@ -53,7 +57,7 @@ const actions = {
   },
   async getTrailSegmentsAction ({ commit }) {
     try {
-      const segments = await trailService.getTrailSegments(this.currentTrailId)
+      const segments = await trailService.getTrailSegments(this.selectedTrailId)
       commit('initialiseSegments', segments)
     } catch (error) {
       commit('setOnError')

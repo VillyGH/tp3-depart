@@ -15,6 +15,7 @@ const getters = {
     return state.parks
   },
   getSelectedParkId () {
+    // console.log(state.selectedParkId)
     return state.selectedParkId
   }
 }
@@ -24,6 +25,11 @@ const mutations = {
     state.parks = parks
     state.onError = false
   },
+  saveParkId (state, index, getters) {
+    state.selectedParkId = state.parks[index].id
+    const temp = getters.selectedParkId
+    console.log(temp)
+  },
   updatePark: (state, park) => {
     const index = state.parks.findIndex(t => t.id === park.id)
     state.parks.splice(index, 1, park)
@@ -31,9 +37,6 @@ const mutations = {
   },
   setOnError (state) {
     state.onError = true
-  },
-  saveParkId (state, id) {
-    state.selectedPark = id
   }
 }
 

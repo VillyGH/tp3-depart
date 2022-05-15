@@ -27,14 +27,15 @@ export default {
   },
   async created () {
     this.selectedParkName = this.$store.getters['trails/getSelectedParkId']
+    this.isLiked = this.$store.getters['trails/isTrailLiked']
   },
   methods: {
     async onLikeClick () {
       if (this.isLiked) {
-        await this.$store.dispatch('posts/likeTrail')
+        await this.$store.dispatch('posts/likeTrailAction')
         this.imageLikeUrl = uiTextPlugin.imageLikeFilledUrl
       } else {
-        await this.$store.dispatch('posts/removeLikeTrail')
+        await this.$store.dispatch('posts/removeLikeTrailAction')
         this.imageLikeUrl = uiTextPlugin.imageLikeEmptyUrl
       }
       this.isLiked = !this.isLiked

@@ -1,6 +1,11 @@
 import { API } from '@/shared/config'
 import axios from 'axios'
 
+async function getUserLikes (id) {
+  const response = await axios.get(`${API}/api/users/${id}/likes/`)
+  return response.data
+}
+
 async function likeTrail (userId, trailId) {
   const infos = {
     userId: userId,
@@ -16,6 +21,7 @@ async function removeLikeTrail (id) {
 }
 
 export const userService = {
+  getUserLikes,
   likeTrail,
   removeLikeTrail
 }
