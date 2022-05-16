@@ -3,6 +3,7 @@ import { parkService } from '@/services/parkService'
 const state = {
   parks: [],
   selectedParkId: 0,
+  parkServiceError: '',
   onError: false
 }
 

@@ -11,17 +11,20 @@
         {{ park.name }}
       </option>
     </select>
+    <div v-if="onError">{{ parkServiceError }}</div>
   </div>
 </template>
 
 <script>
+import uiTextPlugin from '../externalization/uiTextPlugin'
 export default {
   name: 'ParkList',
   data () {
     return {
       selectedIndex: 0,
       firstPark: {},
-      park: {}
+      park: {},
+      parkServiceError: uiTextPlugin.parksError
     }
   },
   async created () {
@@ -37,12 +40,19 @@ export default {
     }
   },
   computed: {
-    parks () {
-      return this.$store.state.parks.parks
+    parks:
+    {
+      get () {
+        return this.$store.getters.getParks
+      },
+      set (newParks) {
+        this.parks = newParks
+      }
     },
     onError () {
       return this.$store.state.parks.onError
     }
-  }
+  },
+
 }
 </script>

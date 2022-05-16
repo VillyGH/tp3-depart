@@ -1,4 +1,8 @@
 export const uiTextPlugin = {
+  // Parks
+  parksError: 'Erreur dans le chargement des parcs',
+
+  // Likes
   imageLikeFilledUrl: 'https://cdn-icons-png.flaticon.com/128/633/633991.png',
   imageLikeEmptyUrl: 'https://cdn-icons-png.flaticon.com/128/126/126473.png',
 
