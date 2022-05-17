@@ -40,10 +40,9 @@ export default {
     }
   },
   computed: {
-    parks:
-    {
+    parks: {
       get () {
-        return this.$store.getters.getParks
+        return this.$store.getters['parks/getParks']
       },
       set (newParks) {
         this.parks = newParks
@@ -52,7 +51,6 @@ export default {
     onError () {
       return this.$store.state.parks.onError
     }
-  },
-
+  }
 }
 </script>

@@ -7,7 +7,11 @@
       v-model="firstTrail"
       v-on:change="saveId($event)"
     >
-      <option class="form-option-lg" v-for="trail in trails" v-bind:key="trail.id">
+      <option
+        class="form-option-lg"
+        v-for="trail in trails"
+        v-bind:key="trail.id"
+      >
         {{ trail.name }}
       </option>
     </select>
@@ -31,7 +35,7 @@ export default {
     this.initiateTrails()
   },
   methods: {
-    initiateTrails () {
+    async initiateTrails () {
       await this.$store.dispatch('trails/getAllParkTrailsAction')
       this.trails = this.$store.getters['trails/getTrails']
       this.firstTrail = this.trails[0].name
@@ -51,9 +55,7 @@ export default {
     }
   },
   watch: {
-   selectedIndex(newVal) {
-
-   }
+    selectedIndex (newVal) {}
   }
 }
 </script>
