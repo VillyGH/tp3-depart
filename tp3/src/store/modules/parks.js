@@ -16,7 +16,7 @@ const getters = {
     return state.parks
   },
   getSelectedParkId () {
-    console.log(state.selectedParkId)
+    // console.log(state.selectedParkId)
     return state.selectedParkId
   }
 }
@@ -26,9 +26,10 @@ const mutations = {
     state.parks = parks
     state.onError = false
   },
-  saveParkId (state, index) {
-    state.selectedParkId = state.parks[index].id
+  saveParkId (state, id) {
+    state.selectedParkId = id
     console.log(state.selectedParkId)
+    state.onError = false
   },
   updatePark: (state, park) => {
     const index = state.parks.findIndex(t => t.id === park.id)
@@ -43,11 +44,12 @@ const mutations = {
 const actions = {
   async getAllParkAction ({ commit }) {
     try {
+      console.log('Step 1')
       const parks = await parkService.getParks()
       commit('initialiseParks', parks)
     } catch (error) {
       // Il n'est pas nécessaire de relancer l'exception. Ce qui importe c'est que le composant soit informé que l'état de postStore est en erreur.
-      // console.log(error)
+      console.log(error)
       commit('setOnError')
     }
   }

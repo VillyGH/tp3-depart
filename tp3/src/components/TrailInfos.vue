@@ -26,6 +26,7 @@ export default {
     }
   },
   async created () {
+    await this.$store.dispatch('likes/getUserLikesAction')
     this.selectedParkName = this.$store.getters['trails/getSelectedParkId']
     this.isLiked = this.$store.getters['trails/isTrailLiked']
   },

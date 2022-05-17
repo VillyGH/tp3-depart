@@ -4,7 +4,7 @@
       class="mt-2 form-select form-select-lg"
       name="parkNames"
       id="parkNames"
-      v-model="firstPark"
+      v-model="firstPark.name"
       v-on:change="saveId($event)"
     >
       <option class="form-option-lg" v-for="park in parks" v-bind:key="park.id">
@@ -21,38 +21,35 @@ export default {
   name: 'ParkList',
   data () {
     return {
-      selectedIndex: 0,
-      firstPark: {},
       park: {},
+      firstPark: {},
+      parks: [],
       parkServiceError: uiTextPlugin.parksError
     }
   },
   async created () {
     await this.$store.dispatch('parks/getAllParkAction')
     this.parks = this.$store.getters['parks/getParks']
-    this.firstPark = this.parks[0].name
-    this.$store.commit('parks/saveParkId', this.selectedIndex)
+    this.firstPark = this.parks[0]
+    this.$store.commit('parks/saveParkId', this.parks[0].id)
   },
   methods: {
     saveId (event) {
-      this.selectedIndex = event.target.options.selectedIndex
-      this.$store.commit('parks/saveParkId', this.selectedIndex)
+      const selectedIndex = event.target.options.selectedIndex
+      this.selectedId = this.parks[selectedIndex].id
+      console.log(this.selectedId)
+      this.$store.commit('parks/saveParkId', this.selectedId)
     }
   },
   computed: {
-    parks:
-    {
+    selectedId: {
       get () {
-        return this.$store.getters.getParks
-      },
-      set (newParks) {
-        this.parks = newParks
+        return this.$store.getters['parks/getSelectedParkId']
       }
     },
     onError () {
       return this.$store.state.parks.onError
     }
-  },
-
+  }
 }
 </script>

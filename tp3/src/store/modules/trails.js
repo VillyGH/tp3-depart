@@ -28,8 +28,9 @@ const mutations = {
     state.trails = trails
     state.onError = false
   },
-  saveTrailId (state, index) {
-    state.selectedTrailId = state.trails[index].id
+  saveTrailId (state, id) {
+    console.log(id)
+    state.selectedTrailId = id
   },
   updateTrail: (state, trail) => {
     const index = state.trails.findIndex(t => t.id === trail.id)
@@ -48,7 +49,8 @@ const mutations = {
 const actions = {
   async getAllParkTrailsAction ({ commit, rootGetters }) {
     try {
-      // console.log(rootGetters['parks/getSelectedParkId'])
+      console.log('Step 2')
+      console.log(rootGetters['parks/getSelectedParkId'])
       const trails = await trailService.getParkTrails(rootGetters['parks/getSelectedParkId'])
       commit('initialiseTrails', trails)
     } catch (error) {

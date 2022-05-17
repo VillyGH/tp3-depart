@@ -1,4 +1,4 @@
-export const trailsJsonFake = [
+export const trailJsonFake = [
     {
         "id": 0,
         "difficulties": [

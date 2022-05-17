@@ -1,4 +1,4 @@
-export const segmentsJsonFake = [
+export const segmentJsonFake = [
   {
     "id": 1,
     "levelId": 0,

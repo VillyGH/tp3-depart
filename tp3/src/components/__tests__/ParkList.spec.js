@@ -53,13 +53,12 @@ describe('ParkList.vue', () => {
 function createMockStore () {
     const saveParkIdMock = jest.fn()
     when(saveParkIdMock)
-      .calledWith(parks[0].id) // permet d'être plus précis
-      .mockReturnValue({ ...parks[0] }) // On veut une copie
+      .calledWith(parks[0].id)
+      .mockReturnValue({ ...parks[0] })
 
     const store = {
       state: {
         parks: {
-          // n'est pas solicité dans le composant PostDetail. Donc non nécessaire ici.
           parks: [...parksJsonFake],
           selectedParkId: parks[0].id,
           onError: false

@@ -1,47 +1,47 @@
 import axios from 'axios'
 import { trailService } from '@/services/trailService'
 import MockAdapter from 'axios-mock-adapter'
-import { trailsJsonFake } from '../../../tests/data/trailsJsonFake'
+import { trailJsonFake } from '../../../tests/data/trailJsonFake'
 
 var mockAxios = new MockAdapter(axios)
 
 const API = process.env.VUE_APP_API
 
 let trails
+let segments
 let firstTrail
 
+
 beforeEach(() => {
-  trails = [...trailsJsonFake]
+  trails = [...trailJsonFake]
   firstTrail = trails[0]
-  firstSegment = segments[0]
+  segments = firstTrail.segments
 
   mockAxios.reset()
 })
 
 describe('trailService.js', () => {
-  test('getTrails doit retourner l’ensemble dess sentiers', async () => {
+  test('getTrails doit retourner l’ensemble des sentiers', async () => {
     mockAxios.onGet(`${API}/api/trails`).reply(200, trails)
 
-    const response = await trailService.gettrails()
+    const response = await trailService.getParkTrails()
 
     expect(response).toStrictEqual(trails)
   })
 
   test('getTrailsById doit retourner les sentier avec l’id correspondant', async () => {
-    const id = 0
-    mockAxios.onGet(`${API}/api/trails`, id).reply(201, firstTrail)
+    mockAxios.onGet(`${API}/api/trail`, firstTrail.id).reply(200, firstTrail)
 
-    const response = await trailService.getParkById(id)
+    const response = await trailService.getTrailById(firstTrail.id)
 
     expect(response).toStrictEqual(firstTrail)
   })
 
-  test('getTrailsSegments doit retourner les segement du sentier avec l’id correspondant', async () => {
-    const id = 0
-    mockAxios.onGet(`${API}/api/segments`, id).reply(201, firstSegment)
+  test('getTrailsSegments doit retourner les segments du sentier avec l’id correspondant', async () => {
+    mockAxios.onGet(`${API}/api/segments`, firstTrail.id).reply(200, segments)
 
-    const response = await trailService.getTrailSegments(id)
+    const response = await trailService.getTrailSegments(firstTrail.id)
 
-    expect(response).toStrictEqual(firstSegment)
+    expect(response).toStrictEqual(segments)
   })
 })
