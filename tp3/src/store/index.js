@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import authentication from './modules/authentication'
 import VuexPersistence from 'vuex-persist'
-import parks from './modules/parks.js'
-import trails from './modules/trails.js'
-import likes from './modules/likes.js'
+import trails from '@/store/modules/trails.js'
+import likes from '@/store/modules/likes.js'
+import park from '@/store/modules/parkStore.js'
 // Code en commentaire ci-dessous: voir note de cours "Conserver les données dans le navigateur"
 // Librairie vuex-persist afin de persister le store dans le navigateur
 // Instanciation de de la persistence dans un session storage
@@ -27,4 +27,5 @@ export default new Vuex.Store({
     likes
   },
   plugins: [vuexLocal.plugin]
+
 })

@@ -1,6 +1,7 @@
 import { API } from '@/shared/config'
 import axios from 'axios'
 
+
 async function getUserLikes (id) {
   const response = await axios.get(`${API}/api/users/${id}/likes/`)
   return response.data
@@ -12,6 +13,7 @@ async function likeTrail (userId, trailId) {
     trailId: trailId
   }
   const response = await axios.post(`${API}/api/likes/`, infos)
+
   return response.data
 }
 
