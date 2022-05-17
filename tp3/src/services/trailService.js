@@ -7,7 +7,6 @@ import { API } from '@/shared/config'
 
 async function getParkTrails (parkId) {
   const response = await axios.get(`${API}/api/parks/${parkId}/trails`)
-
   return response.data
 }
 
@@ -18,7 +17,6 @@ async function getTrail (id) {
 
 async function getTrailSegments (id) {
   const response = await axios.get(`${API}/api/segments/${id}`)
-
   return response.data
 }
 
