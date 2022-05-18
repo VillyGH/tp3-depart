@@ -11,7 +11,7 @@
         {{ park.name }}
       </option>
     </select>
-    <div v-if="onError">{{ parkServiceError }}</div>
+    <div v-if="onError" class="error">{{ parkServiceError }}</div>
   </div>
 </template>
 

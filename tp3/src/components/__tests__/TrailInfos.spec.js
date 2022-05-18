@@ -60,7 +60,7 @@ function createMockStore () {
       state: {
         trails: {
           trails: [...trailsJsonFake],
-          selectedParkId: trails[0].id,
+          selectedTrail: trails[0],
           onError: false
         }
       },

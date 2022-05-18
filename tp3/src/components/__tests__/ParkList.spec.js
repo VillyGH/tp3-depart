@@ -2,6 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import { when, resetAllWhenMocks } from 'jest-when'
 import ParkList from '@/components/ParkList.vue'
 import { parksJsonFake } from '@/../tests/data/parksJsonFake'
+import uiTextPlugin from '../../externalization/uiTextPlugin'
 import flushPromises from 'flush-promises'
 
 let store
@@ -32,21 +33,21 @@ describe('ParkList.vue', () => {
     expect(firstPark).toEqual(selectValue.element.value)
   })
 
-  test('Lorsqu’un parc est selectionné son identifiant est sauvegardé', async () => {
+  test('Lorsqu’un parc est selectionné celui-ci est sauvegardé', async () => {
     const wrapper = shallowMount(ParkList)
     await wrapper
     .findAll('option')[0].trigger('change')
 
-    expect(firstPark).toEqual(selectValue.element.value)
+    expect(firstPark).toEqual(store.state.selectedPark)
   })
 
   test('Si une erreur se produit lors de l’acquisition des données une erreur est affiché', async () => {
     const wrapper = shallowMount(ParkList)
-    const optionsValue = wrapper
-    .find('option')
-    .wrappers.map(option => option.element.value)
+    store.state.onError = true
+    const errorMessage = wrapper
+    .find('.error').text()
 
-    expect(parks).toEqual(optionsValue)
+    expect(errorMessage).toEqual(uiTextPlugin.parksError)
   })
 })
 
@@ -60,7 +61,7 @@ function createMockStore () {
       state: {
         parks: {
           parks: [...parksJsonFake],
-          selectedParkId: parks[0].id,
+          selectedPark: parks[0],
           onError: false
         }
       },
