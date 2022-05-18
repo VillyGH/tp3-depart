@@ -28,17 +28,20 @@ export default {
     }
   },
   async created () {
-    await this.$store.dispatch('parks/getAllParkAction')
-    this.parks = this.$store.getters['parks/getParks']
-    this.firstPark = this.parks[0]
-    this.$store.commit('parks/saveParkId', this.parks[0].id)
+    this.initializeParks()
   },
   methods: {
+    async initializeParks () {
+      await this.$store.dispatch('parks/getAllParkAction')
+      this.parks = this.$store.getters['parks/getParks']
+      this.firstPark = this.parks[0]
+      this.$store.commit('parks/savePark', this.parks[0].id)
+    },
     saveId (event) {
       const selectedIndex = event.target.options.selectedIndex
       this.selectedId = this.parks[selectedIndex].id
       console.log(this.selectedId)
-      this.$store.commit('parks/saveParkId', this.selectedId)
+      this.$store.commit('parks/savePark', this.selectedId)
     }
   },
   computed: {

@@ -27,7 +27,9 @@ export default {
   },
   async created () {
     await this.$store.dispatch('likes/getUserLikesAction')
-    this.selectedParkName = this.$store.getters['trails/getSelectedParkId']
+    this.nbLikes = this.$store.getters['likes/getSelectedPark'].name
+    this.selectedParkName = this.$store.getters['trails/getSelectedPark'].name
+    this.selectedTrail = this.$store.getters['trails/getSelectedTrail'].name
     this.isLiked = this.$store.getters['trails/isTrailLiked']
   },
   methods: {

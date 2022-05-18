@@ -28,24 +28,29 @@ export default {
     }
   },
   async created () {
+    this.initiateTrails()
   },
   methods: {
     async initiateTrails () {
+      await this.$store.dispatch('parks/getAllParkAction')
       await this.$store.dispatch('trails/getAllParkTrailsAction')
-      this.trails = this.$store.getters['trails/getTrails']
-      this.firstTrail = this.trails[0]
-      this.$store.commit('trails/saveTrailId', this.firstTrail.id)
+        .then(() => {
+          this.trails = this.$store.getters['trails/getTrails']
+          console.log('Step 6')
+          this.firstTrail = this.trails[0]
+          this.$store.commit('trails/saveTrail', this.firstTrail)
+        })
     },
     saveId (event) {
       const selectedIndex = event.target.options.selectedIndex
-      this.selectedId = this.parks[selectedIndex].id
-      this.$store.commit('trails/saveTrailId', this.selectedId)
+      this.selectedPark = this.parks[selectedIndex]
+      this.$store.commit('trails/saveTrail', this.selectedPark)
     }
   },
   computed: {
-    selectedId: {
+    selectedPark: {
       get () {
-        return this.$store.getters['trails/getSelectedTrailId']
+        return this.$store.getters['trails/getSelectedTrail']
       }
     },
     onError () {
