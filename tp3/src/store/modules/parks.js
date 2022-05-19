@@ -3,7 +3,7 @@ import { parkService } from '@/services/parkService'
 const state = {
   isLoading: false,
   parks: [],
-  selectedPark: {},
+  selectedPark: [],
   parkServiceError: '',
   onError: false
 }
@@ -14,11 +14,9 @@ const getters = {
     return park
   },
   getParks: state => {
-    console.log('Step 4')
     return state.parks
   },
   getSelectedPark () {
-    console.log(state.selectedParkId)
     return state.selectedPark
   }
 }
@@ -33,7 +31,7 @@ const mutations = {
   },
   savePark (state, park) {
     state.selectedPark = park
-    console.log(state.selectedPark)
+    console.log(state.selectedPark.id)
     state.onError = false
   },
   updatePark: (state, park) => {
@@ -51,10 +49,7 @@ const actions = {
     try {
       commit('setLoading', true)
       const parks = await parkService.getParks()
-        .then(() => {
-          commit('initialiseParks', parks)
-          commit('setLoading', false)
-        })
+      commit('initialiseParks', parks)
     } catch (error) {
       // Il n'est pas nécessaire de relancer l'exception. Ce qui importe c'est que le composant soit informé que l'état de postStore est en erreur.
       console.log(error)

@@ -6,12 +6,12 @@ import flushPromises from 'flush-promises'
 
 let store
 let trails
-let firstPark
+let firstTrail
 
 beforeEach(() => {
   resetAllWhenMocks()
   trails = [...trailsJsonFake]
-  firstPark = { ...trails[0] }
+  firstTrail = { ...trails[0] }
   store = createMockStore()
 })
 
@@ -22,14 +22,15 @@ describe('TrailInfos.vue', () => {
     .find('option')
     .wrappers.map(option => option.element.value)
 
-    expect(trails).toEqual(optionsValue)
+    const trailNames = trails.map(trail => trail.name)
+    expect(trailNames).toEqual(optionsValue)
   })
   test('À l’ouverture, le premier sentier devrait être celui selectionné', async () => {
     const wrapper = shallowMount(TrailInfos)
     const selectValue = wrapper
     .find('select')
 
-    expect(firstPark).toEqual(selectValue.element.value)
+    expect(firstTrail.name).toEqual(selectValue.element.value)
   })
 
   test('Lorsqu’un sentier est selectionné son identifiant est sauvegardé', async () => {

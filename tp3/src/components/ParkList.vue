@@ -4,7 +4,7 @@
       class="mt-2 form-select form-select-lg"
       name="parkNames"
       id="parkNames"
-      v-model="firstPark.name"
+      v-model="firstParkName"
       v-on:change="saveId($event)"
     >
       <option class="form-option-lg" v-for="park in parks" v-bind:key="park.id">
@@ -22,7 +22,7 @@ export default {
   data () {
     return {
       park: {},
-      firstPark: {},
+      firstParkName: '',
       parks: [],
       parkServiceError: uiTextPlugin.parksError
     }
@@ -33,21 +33,27 @@ export default {
   methods: {
     async initializeParks () {
       await this.$store.dispatch('parks/getAllParkAction')
-      this.parks = this.$store.getters['parks/getParks']
-      this.firstPark = this.parks[0]
-      this.$store.commit('parks/savePark', this.parks[0].id)
+        .then(() => {
+          this.parks = this.$store.getters['parks/getParks']
+          this.firstParkName = this.parks[0].name
+          this.$store.commit('parks/savePark', this.parks[0])
+          this.$store.commit('trails/savePark', this.parks[0])
+        })
     },
     saveId (event) {
       const selectedIndex = event.target.options.selectedIndex
       this.selectedId = this.parks[selectedIndex].id
-      console.log(this.selectedId)
-      this.$store.commit('parks/savePark', this.selectedId)
+      this.$store.commit('parks/savePark', this.parks[this.selectedId])
+      this.$store.commit('trails/savePark', this.parks[this.selectedId])
     }
   },
   computed: {
-    selectedId: {
+    selectedPark: {
       get () {
-        return this.$store.getters['parks/getSelectedParkId']
+        return this.$store.getters['parks/getSelectedPark']
+      },
+      set (newPark) {
+        this.$store.commit('parks/savePark', newPark)
       }
     },
     onError () {

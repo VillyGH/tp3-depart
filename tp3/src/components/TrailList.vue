@@ -4,7 +4,7 @@
       class="mt-2 form-select form-select-lg"
       name="trailNames"
       id="trailNames"
-      v-model="firstTrail.name"
+      v-model="firstTrailName"
       v-on:change="saveId($event)"
     >
       <option class="form-option-lg" v-for="trail in trails" v-bind:key="trail.id">
@@ -22,39 +22,54 @@ export default {
   data () {
     return {
       trail: {},
-      firstTrail: {},
+      firstTrailName: {},
       trails: [],
       trailServiceError: uiTextPlugin.parksError
     }
   },
-  async created () {
-    this.initiateTrails()
+  async mounted () {
+    // this.initiateTrails()
   },
   methods: {
     async initiateTrails () {
-      await this.$store.dispatch('parks/getAllParkAction')
-      await this.$store.dispatch('trails/getAllParkTrailsAction')
-        .then(() => {
-          this.trails = this.$store.getters['trails/getTrails']
-          console.log('Step 6')
-          this.firstTrail = this.trails[0]
-          this.$store.commit('trails/saveTrail', this.firstTrail)
-        })
+      await this.$store.dispatch('trails/getAllParkTrailsAction', this.selectedPark.id)
+      this.trails = this.$store.getters['trails/getTrails']
+      this.firstTrailName = this.trails[0].name
+      this.selectedTrail = this.trails[0]
     },
     saveId (event) {
       const selectedIndex = event.target.options.selectedIndex
-      this.selectedPark = this.parks[selectedIndex]
-      this.$store.commit('trails/saveTrail', this.selectedPark)
+      this.selectedTrail = this.trails[selectedIndex]
+      this.$store.commit('trails/saveTrail', this.selectedTrail)
     }
   },
   computed: {
-    selectedPark: {
+    selectedTrail: {
       get () {
         return this.$store.getters['trails/getSelectedTrail']
+      },
+      set (newTrail) {
+        this.$store.commit('trails/saveTrail', newTrail)
+      }
+    },
+    selectedPark: {
+      get () {
+        return this.$store.getters['trails/getSelectedPark']
+      },
+      set (newPark) {
+        this.$store.commit('trails/savePark', newPark)
       }
     },
     onError () {
       return this.$store.state.trails.onError
+    }
+  },
+  watch: {
+    selectedPark: {
+      deep: true,
+      handler: function (newVal, oldVa) {
+        this.initiateTrails()
+      }
     }
   }
 }

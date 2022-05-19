@@ -23,6 +23,7 @@ describe('ParkList.vue', () => {
     .find('option')
     .wrappers.map(option => option.element.value)
 
+    const parkNames = trails.map(trail => trail.name)
     expect(parks).toEqual(optionsValue)
   })
   test('À l’ouverture, le premier parc devrait être celui selectionné', async () => {
@@ -30,7 +31,7 @@ describe('ParkList.vue', () => {
     const selectValue = wrapper
     .find('select')
 
-    expect(firstPark).toEqual(selectValue.element.value)
+    expect(firstPark.name).toEqual(selectValue.element.value)
   })
 
   test('Lorsqu’un parc est selectionné celui-ci est sauvegardé', async () => {
