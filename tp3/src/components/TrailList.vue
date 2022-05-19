@@ -21,14 +21,10 @@ export default {
   name: 'TrailList',
   data () {
     return {
-      trail: {},
-      firstTrailName: {},
       trails: [],
+      firstTrailName: {},
       trailServiceError: uiTextPlugin.parksError
     }
-  },
-  async mounted () {
-    // this.initiateTrails()
   },
   methods: {
     async initiateTrails () {
@@ -40,24 +36,20 @@ export default {
     saveId (event) {
       const selectedIndex = event.target.options.selectedIndex
       this.selectedTrail = this.trails[selectedIndex]
-      this.$store.commit('trails/saveTrail', this.selectedTrail)
     }
   },
   computed: {
+    selectedPark: {
+      get () {
+        return this.$store.getters['parks/getSelectedPark']
+      }
+    },
     selectedTrail: {
       get () {
         return this.$store.getters['trails/getSelectedTrail']
       },
       set (newTrail) {
         this.$store.commit('trails/saveTrail', newTrail)
-      }
-    },
-    selectedPark: {
-      get () {
-        return this.$store.getters['trails/getSelectedPark']
-      },
-      set (newPark) {
-        this.$store.commit('trails/savePark', newPark)
       }
     },
     onError () {

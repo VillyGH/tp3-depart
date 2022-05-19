@@ -35,16 +35,13 @@ export default {
       await this.$store.dispatch('parks/getAllParkAction')
         .then(() => {
           this.parks = this.$store.getters['parks/getParks']
-          this.firstParkName = this.parks[0].name
-          this.$store.commit('parks/savePark', this.parks[0])
-          this.$store.commit('trails/savePark', this.parks[0])
+          this.selectedPark = this.parks[0]
+          this.firstParkName = this.selectedPark.name
         })
     },
     saveId (event) {
       const selectedIndex = event.target.options.selectedIndex
-      this.selectedId = this.parks[selectedIndex].id
-      this.$store.commit('parks/savePark', this.parks[this.selectedId])
-      this.$store.commit('trails/savePark', this.parks[this.selectedId])
+      this.selectedPark = this.parks[selectedIndex]
     }
   },
   computed: {

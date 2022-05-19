@@ -23,7 +23,6 @@ const mutations = {
   initialiseUserLikes: (state, likes) => {
     state.userlikes = likes
     state.onError = false
-    console.log('Step 3')
   },
   setOnError (state) {
     state.onError = true
@@ -37,9 +36,9 @@ const mutations = {
 }
 
 const actions = {
-  async getUserLikesAction ({ commit }) {
+  async getUserLikesAction ({ commit }, userId) {
     try {
-      const likes = await userService.getUserLikes(this.likeInfos.userId)
+      const likes = await userService.getUserLikes(userId)
       commit('initialiseUserLikes', likes)
     } catch (error) {
       commit('setOnError')

@@ -1,9 +1,8 @@
 import { parkService } from '@/services/parkService'
 
 const state = {
-  isLoading: false,
   parks: [],
-  selectedPark: [],
+  selectedPark: {},
   parkServiceError: '',
   onError: false
 }
@@ -16,15 +15,12 @@ const getters = {
   getParks: state => {
     return state.parks
   },
-  getSelectedPark () {
+  getSelectedPark: state => {
     return state.selectedPark
   }
 }
 
 const mutations = {
-  setLoading: (state, loading) => {
-    state.isLoading = loading
-  },
   initialiseParks: (state, parks) => {
     state.parks = parks
     state.onError = false
@@ -47,7 +43,6 @@ const mutations = {
 const actions = {
   async getAllParkAction ({ commit }) {
     try {
-      commit('setLoading', true)
       const parks = await parkService.getParks()
       commit('initialiseParks', parks)
     } catch (error) {

@@ -3,6 +3,7 @@ import { trailService } from '@/services/trailService'
 const state = {
   trails: [],
   selectedTrail: {},
+  selectedPark: {},
   trailSegments: [],
   onError: false
 }
@@ -20,9 +21,6 @@ const getters = {
   },
   getTrailSegments: state => {
     return state.trailSegments
-  },
-  getSelectedPark () {
-    return state.selectedPark
   }
 }
 
@@ -34,11 +32,6 @@ const mutations = {
   saveTrail (state, trail) {
     console.log(trail.id)
     state.selectedTrail = trail
-  },
-  savePark (state, park) {
-    state.selectedPark = park
-    console.log(state.selectedPark.id)
-    state.onError = false
   },
   updateTrail: (state, trail) => {
     const index = state.trails.findIndex(t => t.id === trail.id)
@@ -55,9 +48,8 @@ const mutations = {
 }
 
 const actions = {
-  async getAllParkTrailsAction ({ commit, rootGetters }, id) {
+  async getAllParkTrailsAction ({ commit }, id) {
     try {
-      // const selectedPark = rootGetters['parks/getSelectedPark']
       const trails = await trailService.getParkTrails(id)
       commit('initialiseTrails', trails)
     } catch (error) {

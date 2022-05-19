@@ -7,8 +7,8 @@
       v-on:click="onLikeClick"
     />
     <p>{{ nbLikes }}</p>
-    <p>{{ selectedTrail }}</p>
-    <p>{{ selectedPark }}</p>
+    <p>{{ selectedTrail.name }}</p>
+    <p>{{ selectedPark.name }}</p>
   </div>
 </template>
 
@@ -20,21 +20,19 @@ export default {
     return {
       imageLikeUrl: uiTextPlugin.imageLikeEmptyUrl,
       nbLikes: 0,
-      selectedPark: '',
-      selectedTrail: '',
       isLiked: false
     }
   },
   async created () {
-
+    this.initializeTrailInfos()
   },
   methods: {
     async initializeTrailInfos () {
-      await this.$store.dispatch('likes/getUserLikesAction')
-      this.nbLikes = this.$store.getters['likes/getSelectedPark'].name
-      this.selectedParkName = this.$store.getters['trails/getSelectedPark'].name
-      this.selectedTrail = this.$store.getters['trails/getSelectedTrail'].name
-      this.isLiked = this.$store.getters['trails/isTrailLiked']
+      const userId = this.$store.getters['authentification/getTokenUserId']
+      console.log(userId)
+      await this.$store.dispatch('likes/getUserLikesAction', userId)
+      this.nbLikes = this.$store.getters['likes/getUserLikes']
+      this.isLiked = this.$store.getters['likes/isTrailLiked']
     },
     async onLikeClick () {
       if (this.isLiked) {
@@ -45,6 +43,24 @@ export default {
         this.imageLikeUrl = uiTextPlugin.imageLikeEmptyUrl
       }
       this.isLiked = !this.isLiked
+    }
+  },
+  computed: {
+    selectedTrail: {
+      get () {
+        return this.$store.getters['trails/getSelectedTrail']
+      },
+      set (newTrail) {
+        this.$store.commit('trails/saveTrail', newTrail)
+      }
+    },
+    selectedPark: {
+      get () {
+        return this.$store.getters['parks/getSelectedPark']
+      }
+    },
+    onError () {
+      return this.$store.state.trails.onError
     }
   }
 }
