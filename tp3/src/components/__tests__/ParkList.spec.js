@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import { when, resetAllWhenMocks } from 'jest-when'
 import ParkList from '@/components/ParkList.vue'
-import { parksJsonFake } from '@/../tests/data/parksJsonFake'
+import { parksJsonFake } from '@/../tests/data/parkJsonFake'
 import uiTextPlugin from '../../externalization/uiTextPlugin'
 import flushPromises from 'flush-promises'
 
@@ -20,24 +20,22 @@ describe('ParkList.vue', () => {
   test('À l’ouverture, doit contenir la liste de tous les parcs disponibles.', async () => {
     const wrapper = shallowMount(ParkList)
     const optionsValue = wrapper
-    .find('option')
-    .wrappers.map(option => option.element.value)
+      .find('option')
+      .wrappers.map(option => option.element.value)
 
     const parkNames = trails.map(trail => trail.name)
     expect(parks).toEqual(optionsValue)
   })
   test('À l’ouverture, le premier parc devrait être celui selectionné', async () => {
     const wrapper = shallowMount(ParkList)
-    const selectValue = wrapper
-    .find('select')
+    const selectValue = wrapper.find('select')
 
     expect(firstPark.name).toEqual(selectValue.element.value)
   })
 
   test('Lorsqu’un parc est selectionné celui-ci est sauvegardé', async () => {
     const wrapper = shallowMount(ParkList)
-    await wrapper
-    .findAll('option')[0].trigger('change')
+    await wrapper.findAll('option')[0].trigger('change')
 
     expect(firstPark).toEqual(store.state.selectedPark)
   })
@@ -45,31 +43,30 @@ describe('ParkList.vue', () => {
   test('Si une erreur se produit lors de l’acquisition des données une erreur est affiché', async () => {
     const wrapper = shallowMount(ParkList)
     store.state.onError = true
-    const errorMessage = wrapper
-    .find('.error').text()
+    const errorMessage = wrapper.find('.error').text()
 
     expect(errorMessage).toEqual(uiTextPlugin.parksError)
   })
 })
 
 function createMockStore () {
-    const saveParkIdMock = jest.fn()
-    when(saveParkIdMock)
-      .calledWith(parks[0].id)
-      .mockReturnValue({ ...parks[0] })
+  const saveParkIdMock = jest.fn()
+  when(saveParkIdMock)
+    .calledWith(parks[0].id)
+    .mockReturnValue({ ...parks[0] })
 
-    const store = {
-      state: {
-        parks: {
-          parks: [...parksJsonFake],
-          selectedPark: parks[0],
-          onError: false
-        }
-      },
-      getters: {
-        'parks/saveParkId': saveParkIdMock
-      },
-      dispatch: jest.fn()
-    }
-    return store
+  const store = {
+    state: {
+      parks: {
+        parks: [...parksJsonFake],
+        selectedPark: parks[0],
+        onError: false
+      }
+    },
+    getters: {
+      'parks/saveParkId': saveParkIdMock
+    },
+    dispatch: jest.fn()
   }
+  return store
+}
