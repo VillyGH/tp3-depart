@@ -1,9 +1,14 @@
 import { API } from '@/shared/config'
-import axios from 'axios'
+import requestInterceptor from '@/shared/requestInterceptor'
+import { parseAxiosErrorToAppError } from '@/shared/errorHelper'
 
-async function getUserLikes (id) {
-  const response = await axios.get(`${API}/api/users/${id}/likes/`)
-  return response.data
+async function getUserLikes (userId) {
+  try {
+    const response = await requestInterceptor.get(`${API}/api/users/${userId}/likes/`)
+    return response.data
+  } catch (error) {
+    throw parseAxiosErrorToAppError(error)
+  }
 }
 
 async function likeTrail (userId, trailId) {
@@ -11,17 +16,27 @@ async function likeTrail (userId, trailId) {
     userId: userId,
     trailId: trailId
   }
-  const response = await axios.post(`${API}/api/likes/`, infos)
-  return response.data
+  try {
+    console.log(infos)
+    const response = await requestInterceptor.post(`${API}/api/likes/`, infos)
+    return response.data
+  } catch (error) {
+    throw parseAxiosErrorToAppError(error)
+  }
 }
 
-async function removeLikeTrail (id) {
-  const response = await axios.delete(`${API}/api/likes/${id}`)
-  return response.data
+async function removeLUserike (userId) {
+  try {
+    // console.log(userId)
+    const response = await requestInterceptor.delete(`${API}/api/likes/${userId}`)
+    return response.data
+  } catch (error) {
+    throw parseAxiosErrorToAppError(error)
+  }
 }
 
 export const userService = {
   getUserLikes,
   likeTrail,
-  removeLikeTrail
+  removeLUserike
 }

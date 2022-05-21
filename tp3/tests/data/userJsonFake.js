@@ -1,4 +1,4 @@
-export const usersJsonFake = [
+export const userJsonFake = [
     {
         "email": "Trystan.Murphy@yahoo.com",
         "password": "$2a$04$MfO1BRrLXKwmPi/MjnZ2meLKBymkt5HTyPdQT3z.cA.cvICzAqbWy",

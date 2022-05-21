@@ -1,4 +1,4 @@
-import { authJsonFake } from '@/../tests/data/authJsonFake'
+import { loginJsonFake } from '@/tests/data/loginJsonFake'
 import { authService } from '@/services/authService.js'
 import authentification from '@/store/modules/authentification.js'
 
@@ -8,14 +8,14 @@ let auth
 let firstPost
 
 beforeEach(() => {
-  auth = [...authJsonFake] // On utilise un copie, ainsi on s'assure que auth ne sera pas altéré entre les tests
+  auth = [...loginJsonFake] // On utilise un copie, ainsi on s'assure que auth ne sera pas altéré entre les tests
   firstUser = { ...auth[0] } // Même chose pour firstpost, on utilise un copie, pour s'assurer que firstpost ne soit pas altéré entre les tests.
 })
 
 describe('Authentification', () => {
   describe('getters', () => {
     test('isLoggedIn doit retourner le state du token', async () => {
-      const state = { auth: [...authJsonFake] }
+      const state = { auth: [...loginJsonFake] }
       const firstPost = state.auth[0]
 
       const stateToken = authentification.getters.isLoggedIn(state)
@@ -52,7 +52,7 @@ describe('Authentification', () => {
       expect(state.token).toStrictEqual(token)
     })
 
-    test("setAuthServiceError doit mettre l’état d’erreur du service d’authentification", async () => {
+    test('setAuthServiceError doit mettre l’état d’erreur du service d’authentification', async () => {
       const message = 'Erreur: Utilisateur introuvable'
       const state = {
         authServiceError: ''
@@ -69,8 +69,8 @@ describe('Authentification', () => {
       authService.getToken.mockResolvedValue(token)
 
       const credentials = {
-        "email": "Branson35@hotmail.com",
-        "password": "2632976cad"
+        email: 'Branson35@hotmail.com',
+        password: '2632976cad'
       }
 
       await authentification.actions.login({ commit }, credentials)
@@ -83,8 +83,8 @@ describe('Authentification', () => {
       authService.getauth.mockRejectedValue(new Error())
 
       const credentials = {
-        "email": "Branson35@hotmail.com",
-        "password": "2632976cad"
+        email: 'Branson35@hotmail.com',
+        password: '2632976cad'
       }
 
       try {
@@ -99,9 +99,9 @@ describe('Authentification', () => {
       authService.getToken.mockResolvedValue(token)
 
       const profile = {
-        "name": "Brandom",
-        "email": "Branson35@hotmail.com",
-        "password": "2632976cad"
+        name: 'Brandom',
+        email: 'Branson35@hotmail.com',
+        password: '2632976cad'
       }
 
       await authentification.actions.register({ commit }, profile)
@@ -122,9 +122,9 @@ describe('Authentification', () => {
       authService.getauth.mockRejectedValue(new Error())
 
       const credentials = {
-        "name": "Brandom",
-        "email": "Branson35@hotmail.com",
-        "password": "2632976cad"
+        name: 'Brandom',
+        email: 'Branson35@hotmail.com',
+        password: '2632976cad'
       }
 
       try {

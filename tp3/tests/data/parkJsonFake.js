@@ -1,4 +1,4 @@
-export const parksJsonFake = [
+export const parkJsonFake = [
   {
     "id": "15",
     "name": "Vancouver",

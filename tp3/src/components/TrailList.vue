@@ -4,7 +4,7 @@
       class="mt-2 form-select form-select-lg"
       name="trailNames"
       id="trailNames"
-      v-model="firstTrail"
+      v-model="firstTrailName"
       v-on:change="saveId($event)"
     >
       <option
@@ -25,37 +25,48 @@ export default {
   name: 'TrailList',
   data () {
     return {
-      selectedIndex: 0,
-      firstTrail: {},
-      trail: {},
+      trails: [],
+      firstTrailName: {},
       trailServiceError: uiTextPlugin.parksError
     }
   },
-  async created () {
-    this.initiateTrails()
-  },
   methods: {
     async initiateTrails () {
-      await this.$store.dispatch('trails/getAllParkTrailsAction')
+      await this.$store.dispatch('trails/getAllParkTrailsAction', this.selectedPark.id)
       this.trails = this.$store.getters['trails/getTrails']
-      this.firstTrail = this.trails[0].name
-      this.$store.commit('trails/saveTrailId', this.selectedIndex)
+      this.firstTrailName = this.trails[0].name
+      this.selectedTrail = this.trails[0]
     },
     saveId (event) {
-      this.selectedIndex = event.target.options.selectedIndex
-      this.$store.commit('trails/saveTrailId', this.selectedIndex)
+      const selectedIndex = event.target.options.selectedIndex
+      this.selectedTrail = this.trails[selectedIndex]
     }
   },
   computed: {
-    trails () {
-      return this.$store.getters.getTrails
+    selectedPark: {
+      get () {
+        return this.$store.getters['parks/getSelectedPark']
+      }
+    },
+    selectedTrail: {
+      get () {
+        return this.$store.getters['trails/getSelectedTrail']
+      },
+      set (newTrail) {
+        this.$store.commit('trails/saveTrail', newTrail)
+      }
     },
     onError () {
       return this.$store.state.trails.onError
     }
   },
   watch: {
-    selectedIndex (newVal) {}
+    selectedPark: {
+      deep: true,
+      handler: function (newVal, oldVa) {
+        this.initiateTrails()
+      }
+    }
   }
 }
 </script>

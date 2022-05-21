@@ -26,7 +26,6 @@ let router
 beforeEach(() => {
   router = new VueRouter({ routes, mode: 'abstract' })
 
-  // mount VS shallowMount
   wrapper = mount(App, {
     localVue,
     router
