@@ -15,6 +15,11 @@ async function getTrailById (id) {
   return response.data
 }
 
+async function getTrailLikes (id) {
+  const response = await axios.get(`${API}/api/trails/${id}/likes`)
+  return response.data
+}
+
 async function getTrailSegments (trailId) {
   const response = await axios.get(`${API}/api/segments/${trailId}`)
   return response.data
@@ -23,5 +28,6 @@ async function getTrailSegments (trailId) {
 export const trailService = {
   getParkTrails,
   getTrailById,
+  getTrailLikes,
   getTrailSegments
 }

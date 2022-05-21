@@ -19,39 +19,28 @@ export default {
   data () {
     return {
       imageLikeUrl: uiTextPlugin.imageLikeEmptyUrl,
-      nbLikes: 0,
-      isLiked: false
+      nbLikes: 0
     }
-  },
-  async created () {
-    this.initializeTrailInfos()
   },
   methods: {
     async initializeTrailInfos () {
-      const userId = this.$store.getters['authentification/getTokenUserId']
-      console.log(userId)
-      await this.$store.dispatch('likes/getUserLikesAction', userId)
-      this.nbLikes = this.$store.getters['likes/getUserLikes']
-      this.isLiked = this.$store.getters['likes/isTrailLiked']
+      await this.$store.dispatch('likes/getTrailLikesAction', this.selectedTrail.id)
     },
     async onLikeClick () {
-      if (this.isLiked) {
-        await this.$store.dispatch('posts/likeTrailAction')
+      if (!this.isTrailLiked) {
+        await this.$store.dispatch('likes/likeTrailAction')
         this.imageLikeUrl = uiTextPlugin.imageLikeFilledUrl
       } else {
-        await this.$store.dispatch('posts/removeLikeTrailAction')
+        await this.$store.dispatch('likes/removeLikeTrailAction')
         this.imageLikeUrl = uiTextPlugin.imageLikeEmptyUrl
       }
-      this.isLiked = !this.isLiked
+      this.isTrailLiked = !this.isTrailLiked
     }
   },
   computed: {
     selectedTrail: {
       get () {
         return this.$store.getters['trails/getSelectedTrail']
-      },
-      set (newTrail) {
-        this.$store.commit('trails/saveTrail', newTrail)
       }
     },
     selectedPark: {
@@ -59,8 +48,29 @@ export default {
         return this.$store.getters['parks/getSelectedPark']
       }
     },
+    nbTrailLikes: {
+      get () {
+        return this.$store.getters['likes/getTrailLikes']
+      }
+    },
+    isTrailLiked: {
+      get () {
+        return this.$store.getters['likes/isTrailLiked']
+      },
+      set (newValue) {
+
+      }
+    },
     onError () {
       return this.$store.state.trails.onError
+    }
+  },
+  watch: {
+    selectedTrail: {
+      deep: true,
+      handler: function (newVal, oldVa) {
+        this.initializeTrailInfos()
+      }
     }
   }
 }

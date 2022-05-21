@@ -1,9 +1,15 @@
 import { API } from '@/shared/config'
+import requestInterceptor from '@/shared/requestInterceptor'
+import { parseAxiosErrorToAppError } from '@/shared/errorHelper'
 import axios from 'axios'
 
-async function getUserLikes (id) {
-  const response = await axios.get(`${API}/api/users/${id}/likes/`)
-  return response.data
+async function getUserLikes (userId) {
+  try {
+    const response = await requestInterceptor.get(`${API}/api/users/${userId}/likes/`)
+    return response.data
+  } catch (error) {
+    throw parseAxiosErrorToAppError(error)
+  }
 }
 
 async function likeTrail (userId, trailId) {
@@ -11,8 +17,12 @@ async function likeTrail (userId, trailId) {
     userId: userId,
     trailId: trailId
   }
-  const response = await axios.post(`${API}/api/likes/`, infos)
-  return response.data
+  try {
+    const response = await requestInterceptor.post(`${API}/api/likes/`, infos)
+    return response.data
+  } catch (error) {
+    throw parseAxiosErrorToAppError(error)
+  }
 }
 
 async function removeLikeTrail (id) {

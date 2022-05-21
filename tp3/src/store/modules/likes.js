@@ -1,18 +1,16 @@
 import { userService } from '@/services/userService'
+import { trailService } from '@/services/trailService'
 
 const state = {
-  userlikes: [],
-  likeInfos: {},
+  trailLikes: [],
+  nbTrailLikes: 0,
   isTrailLiked: false,
   onError: false
 }
 
 const getters = {
-  getUserLikes: state => {
-    return state.userlikes
-  },
-  getLikeInfos: state => {
-    return state.likeInfos
+  getNbTrailLikes: state => {
+    return state.nbTrailLikes
   },
   isTrailLiked: state => {
     return state.isTrailLiked
@@ -20,40 +18,64 @@ const getters = {
 }
 
 const mutations = {
-  initialiseUserLikes: (state, likes) => {
-    state.userlikes = likes
+  countNbTrailLikes: (state, likes) => {
+    state.nbTrailLikes = likes.length
+    state.likes = likes
     state.onError = false
+  },
+  checkIfTrailLiked: (state, userId) => {
+    console.log(userId)
+    state.likes.array.forEach(like => {
+      if (like.userId === userId) {
+        state.isTrailLiked = true
+      }
+    })
+  },
+  setTrailLiked: (state, value) => {
+    state.isTrailLiked = value
   },
   setOnError (state) {
     state.onError = true
-  },
-  initialiseLikeInfos (state) {
-    state.likeInfos = {
-      userId: this.$store.getters['authentification/getTokenUserId'],
-      trailId: this.$store.getters['trails/getSelectedTrailId']
-    }
   }
 }
 
 const actions = {
-  async getUserLikesAction ({ commit }, userId) {
+/*   async getUserLikesAction ({ commit, rootGetters }) {
     try {
+      const userId = rootGetters['authentication/getTokenUserId']
       const likes = await userService.getUserLikes(userId)
       commit('initialiseUserLikes', likes)
     } catch (error) {
       commit('setOnError')
     }
-  },
-  async likeTrailAction ({ commit }) {
+  }, */
+  async getTrailLikesAction ({ commit, rootGetters }, trailId) {
     try {
-      await userService.likeTrail(this.likeInfos)
+      const userId = rootGetters['authentication/getTokenUserId']
+      const likes = await trailService.getTrailLikes(trailId)
+      commit('countNbTrailLikes', likes)
+      commit('checkIfTrailLiked', userId)
     } catch (error) {
       commit('setOnError')
     }
   },
-  async removeLikeTrailAction ({ commit }) {
+  async likeTrailAction ({ commit, rootGetters }) {
     try {
-      await userService.removeLikeTrail(this.likeInfos.userId)
+      const userId = rootGetters['authentication/getTokenUserId']
+      const trailId = rootGetters['trails/getSelectedTrailId']
+      await userService.likeTrail(userId, trailId)
+      commit('setTrailLiked', true)
+    } catch (error) {
+      commit('setOnError')
+    }
+  },
+  async removeLikeTrailAction ({ commit, rootGetters }) {
+    try {
+      if (state.nbTrailLikes !== 0) {
+        const userId = rootGetters['authentication/getTokenUserId']
+        await userService.removeLikeTrail(userId)
+        commit('setTrailLiked', false)
+      }
     } catch (error) {
       commit('setOnError')
     }
