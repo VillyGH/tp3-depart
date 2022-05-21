@@ -17,7 +17,6 @@ export default {
   name: 'TrailMap',
   data () {
     return {
-      selectedLatlngs: [],
       url: uiTextPlugin.mapUrl,
       attribution: uiTextPlugin.attribution,
       zoom: uiTextPlugin.zoomValue,
@@ -28,11 +27,33 @@ export default {
       }
     }
   },
-  async created () {
-    await this.$store.dispatch('trails/getTrailSegmentsAction')
-    this.selectedLatlngs = this.$store.getters['trails/getTrailSegments']
-    this.center = this.selectedLatlngs[0]
-    this.polyline.latlngs = this.selectedLatlngs
+  methods: {
+    async initiateSegments () {
+      await this.$store.dispatch('trails/getTrailSegmentsAction', this.selectedTrail.id)
+      const coordinates = this.$store.getters['trails/getTrailSegments'].coordinates
+      this.polyline.latlngs = Object.entries(coordinates).map(([lat, lng]) => ({ lat, lng }))
+      console.log(this.polyline.latlngs)
+      this.center = this.polyline.latlngs[0]
+    },
+    saveId (event) {
+      const selectedIndex = event.target.options.selectedIndex
+      this.selectedTrail = this.trails[selectedIndex]
+    }
+  },
+  computed: {
+    selectedTrail: {
+      get () {
+        return this.$store.getters['trails/getSelectedTrail']
+      }
+    }
+  },
+  watch: {
+    selectedTrail: {
+      deep: true,
+      handler: function (newVal, oldVa) {
+        this.initiateSegments()
+      }
+    }
   }
 }
 </script>

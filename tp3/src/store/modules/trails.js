@@ -56,9 +56,9 @@ const actions = {
       commit('setOnError')
     }
   },
-  async getTrailSegmentsAction ({ commit }) {
+  async getTrailSegmentsAction ({ commit }, id) {
     try {
-      const segments = await trailService.getTrailSegments(this.selectedTrailId)
+      const segments = await trailService.getTrailSegments(id)
       commit('initialiseSegments', segments)
     } catch (error) {
       commit('setOnError')
