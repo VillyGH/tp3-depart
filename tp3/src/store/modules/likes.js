@@ -18,9 +18,9 @@ const getters = {
 }
 
 const mutations = {
-  countNbTrailLikes: (state, likes) => {
-    state.nbTrailLikes = likes.length
+  initiateTrailLikes: (state, likes) => {
     state.likes = likes
+    state.nbTrailLikes = state.likes.length
     state.onError = false
   },
   checkIfTrailLiked: (state, userId) => {
@@ -40,20 +40,12 @@ const mutations = {
 }
 
 const actions = {
-/*   async getUserLikesAction ({ commit, rootGetters }) {
-    try {
-      const userId = rootGetters['authentication/getTokenUserId']
-      const likes = await userService.getUserLikes(userId)
-      commit('initialiseUserLikes', likes)
-    } catch (error) {
-      commit('setOnError')
-    }
-  }, */
   async getTrailLikesAction ({ commit, rootGetters }, trailId) {
     try {
       const userId = rootGetters['authentication/getTokenUserId']
       const likes = await trailService.getTrailLikes(trailId)
-      commit('countNbTrailLikes', likes)
+      console.log(likes)
+      commit('initiateTrailLikes', likes)
       commit('checkIfTrailLiked', userId)
     } catch (error) {
       commit('setOnError')
@@ -61,19 +53,19 @@ const actions = {
   },
   async likeTrailAction ({ commit, rootGetters }) {
     try {
-      const userId = rootGetters['authentication/getTokenUserId']
-      const trailId = rootGetters['trails/getSelectedTrailId']
+      const userId = parseInt(rootGetters['authentication/getTokenUserId'])
+      const trailId = rootGetters['trails/getSelectedTrail'].id
       await userService.likeTrail(userId, trailId)
       commit('setTrailLiked', true)
     } catch (error) {
       commit('setOnError')
     }
   },
-  async removeLikeTrailAction ({ commit, rootGetters }) {
+  async removeUserLikeAction ({ commit, rootGetters }) {
     try {
-      if (state.nbTrailLikes !== 0) {
-        const userId = rootGetters['authentication/getTokenUserId']
-        await userService.removeLikeTrail(userId)
+      if (state.nbTrailLiked !== 0) {
+        const userId = parseInt(rootGetters['authentication/getTokenUserId'])
+        await userService.removeLUserike(userId)
         commit('setTrailLiked', false)
       }
     } catch (error) {
