@@ -1,17 +1,17 @@
 <template>
-  <div>
+  <div class="ml-5">
+    <label for="trailNames" class="ml-2">{{ trailLabel }} </label>
     <select
-      class="mt-2 form-select form-select-lg"
+      class="mt-2 ml-3 form-select form-select-lg"
       name="trailNames"
       id="trailNames"
       v-model="firstTrailName"
-      v-on:change="saveId($event)"
-    >
+      v-on:change="saveId($event)">
       <option class="form-option-lg" v-for="trail in trails" v-bind:key="trail.id">
         {{ trail.name }}
       </option>
     </select>
-    <div v-if="onError">{{ trailServiceError }}</div>
+    <p>{{ errorMessage }}</p>
   </div>
 </template>
 
@@ -21,6 +21,7 @@ export default {
   name: 'TrailList',
   data () {
     return {
+      trailLabel: uiTextPlugin.trailLabel,
       trails: [],
       firstTrailName: {},
       trailServiceError: uiTextPlugin.parksError
@@ -29,9 +30,11 @@ export default {
   methods: {
     async initiateTrails () {
       await this.$store.dispatch('trails/getAllParkTrailsAction', this.selectedPark.id)
-      this.trails = this.$store.getters['trails/getTrails']
-      this.firstTrailName = this.trails[0].name
-      this.selectedTrail = this.trails[0]
+      if (this.errorMessage === '') {
+        this.trails = this.$store.getters['trails/getTrails']
+        this.firstTrailName = this.trails[0].name
+        this.selectedTrail = this.trails[0]
+      }
     },
     saveId (event) {
       const selectedIndex = event.target.options.selectedIndex
@@ -52,8 +55,10 @@ export default {
         this.$store.commit('trails/saveTrail', newTrail)
       }
     },
-    onError () {
-      return this.$store.state.trails.onError
+    errorMessage: {
+      get () {
+        return this.$store.getters['trails/getErrorMessage']
+      }
     }
   },
   watch: {

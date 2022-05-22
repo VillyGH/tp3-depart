@@ -1,8 +1,10 @@
 <template>
-  <l-map style="height: 350px; width:350px" :zoom="zoom" :center="center">
-    <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-    <l-polyline :lat-lngs="polyline.latlngs" :color="polyline.color"></l-polyline>
-  </l-map>
+  <div class="ml-5">
+    <l-map style="height: 610px; width:610px" :zoom="zoom" :center="center">
+      <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+      <l-polyline :lat-lngs="polyline.latlngs" :color="polyline.color"></l-polyline>
+    </l-map>
+  </div>
 </template>
 
 <script>
@@ -20,9 +22,9 @@ export default {
       url: uiTextPlugin.mapUrl,
       attribution: uiTextPlugin.attribution,
       zoom: uiTextPlugin.zoomValue,
-      center: [],
+      center: [47.313220, -1.319482],
       polyline: {
-        latlngs: [],
+        latlngs: [[47.334852, -1.509485], [47.342596, -1.328731], [47.241487, -1.190568], [47.234787, -1.358337]],
         color: uiTextPlugin.polylineDefaultColor
       }
     }
@@ -31,10 +33,7 @@ export default {
     async initiateSegments () {
       await this.$store.dispatch('trails/getTrailSegmentsAction', this.selectedTrail.id)
       const coordinates = this.$store.getters['trails/getTrailSegments'].coordinates
-      const arrayOfcoordinates = []
-      arrayOfcoordinates.push(coordinates)
-      this.polyline.latlngs = arrayOfcoordinates
-      console.log(this.polyline.latlngs)
+      this.polyline.latlngs = coordinates
       this.center = this.polyline.latlngs[0]
     },
     saveId (event) {

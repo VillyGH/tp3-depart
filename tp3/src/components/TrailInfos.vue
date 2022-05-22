@@ -1,14 +1,15 @@
 <template>
-  <div class="">
+  <div class="ml-5">
+    <p class="mt-2">{{ selectedTrail.name }}</p>
+    <p>{{ parkText }} {{ selectedPark.name }}</p>
     <img
       v-bind:src="imageLikeUrl"
       style="width:100px;height:100px"
       alt="Like the trail image"
       v-on:click="onLikeClick"
     />
-    <p>{{ nbTrailLikes }}</p>
-    <p>{{ selectedTrail.name }}</p>
-    <p>{{ selectedPark.name }}</p>
+    <p class="ml-4">{{ nbTrailLiked }} {{ likesText }}</p>
+    <p>{{ confirmationMessage }}</p>
   </div>
 </template>
 
@@ -18,8 +19,8 @@ export default {
   name: 'TrailInfos',
   data () {
     return {
-      imageLikeUrl: uiTextPlugin.imageLikeEmptyUrl,
-      nbLikes: 0
+      parkText: uiTextPlugin.parcText,
+      likesText: uiTextPlugin.likesText
     }
   },
   methods: {
@@ -29,10 +30,8 @@ export default {
     async onLikeClick () {
       if (!this.isTrailLiked) {
         await this.$store.dispatch('likes/likeTrailAction')
-        this.imageLikeUrl = uiTextPlugin.imageLikeFilledUrl
       } else {
         await this.$store.dispatch('likes/removeUserLikeAction')
-        this.imageLikeUrl = uiTextPlugin.imageLikeEmptyUrl
       }
     }
   },
@@ -47,9 +46,9 @@ export default {
         return this.$store.getters['parks/getSelectedPark']
       }
     },
-    nbTrailLikes: {
+    nbTrailLiked: {
       get () {
-        return this.$store.getters['likes/getNbTrailLikes']
+        return this.$store.getters['likes/getNbTrailLiked']
       }
     },
     isTrailLiked: {
@@ -57,8 +56,15 @@ export default {
         return this.$store.getters['likes/isTrailLiked']
       }
     },
-    onError () {
-      return this.$store.state.trails.onError
+    imageLikeUrl: {
+      get () {
+        return this.$store.getters['likes/getImgLikeUrl']
+      }
+    },
+    confirmationMessage: {
+      get () {
+        return this.$store.getters['likes/getConfirmationMessage']
+      }
     }
   },
   watch: {

@@ -1,10 +1,18 @@
 <template>
   <div>
-    <ParkList />
-    <TrailList />
-    <TrailInfos  />
-    <TrailMap />
-    <router-view />
+    <div class="row">
+      <div class="col">
+        <ParkList />
+        <TrailList />
+        <TrailMap />
+      </div>
+      <div class="col">
+        <TrailInfos  />
+      </div>
+      <div class="col">
+        <router-view />
+      </div>
+    </div>
   </div>
 </template>
 

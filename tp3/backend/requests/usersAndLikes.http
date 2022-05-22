@@ -14,7 +14,7 @@ content-type: application/json
   "email": "user@user.com",
   "password": "password",
   "name": "user user",
-  "id":99999,
+  "id":1000,
   "role": "user"
 }
 
@@ -32,11 +32,11 @@ content-type: application/json
 ####################################################################
 # Info sur un utilisateur
 GET http://localhost:3000/api/users/99999
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2MTk0NzA0NTIsImV4cCI6MTYxOTQ3NDA1Miwic3ViIjoiOTk5OTkifQ.VzbKkMZSXLvfJBt6VM_yyvjFWaz9VUvIoSUXVOsIWhU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2NTMyNDAwNTQsImV4cCI6MTY1MzI0MzY1NCwic3ViIjoiMTAwMCJ9.q1oe2ZZ2wfPC_OfLFzmd0dKHlmnFatU7MOlBJ8OpmUs
 
 ### Les "j'aime" d'un utilisateur
-GET http://localhost:3000/api/users/99999/likes
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2NTMxODcwOTMsImV4cCI6MTY1MzE5MDY5Mywic3ViIjoiOTk5OTkifQ.hoqRhe-C0jS3sn9HDZHxJ_-5R3FHCHLkJQcXTrte9kI
+GET http://localhost:3000/api/users/1000/likes
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2NTMyNDAwNTQsImV4cCI6MTY1MzI0MzY1NCwic3ViIjoiMTAwMCJ9.q1oe2ZZ2wfPC_OfLFzmd0dKHlmnFatU7MOlBJ8OpmUs
 
 
 ####################################################################
@@ -45,14 +45,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAd
 
 ### Ajouter un "j'aime" à un utilisateur
 POST http://localhost:3000/api/likes
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2NTMxODcwOTMsImV4cCI6MTY1MzE5MDY5Mywic3ViIjoiOTk5OTkifQ.hoqRhe-C0jS3sn9HDZHxJ_-5R3FHCHLkJQcXTrte9kI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2NTMyNDAwNTQsImV4cCI6MTY1MzI0MzY1NCwic3ViIjoiMTAwMCJ9.q1oe2ZZ2wfPC_OfLFzmd0dKHlmnFatU7MOlBJ8OpmUs
 content-type: application/json
 
 {
-    "userId": 99999,
+    "userId": 1000,
     "trailId": 246
 }
 
 ### supprimer un "j'aime" d'un utilisateur
-DELETE  http://localhost:3000/api/likes/99999
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2NTMxODcwOTMsImV4cCI6MTY1MzE5MDY5Mywic3ViIjoiOTk5OTkifQ.hoqRhe-C0jS3sn9HDZHxJ_-5R3FHCHLkJQcXTrte9kI
+DELETE  http://localhost:3000/api/likes/1056
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2NTMyNDAwNTQsImV4cCI6MTY1MzI0MzY1NCwic3ViIjoiMTAwMCJ9.q1oe2ZZ2wfPC_OfLFzmd0dKHlmnFatU7MOlBJ8OpmUs

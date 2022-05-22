@@ -1,16 +1,30 @@
 export const uiTextPlugin = {
   // Parks
-  parksError: 'Erreur dans le chargement des parcs',
+  parksLabel: 'Parcs : ',
+  trailLabel: 'Trails : ',
+  parcText: 'Parc: ',
+
+  // Trails
+  noTrailsAvailableMessage: 'Aucun sentier est disponible pour le moment',
 
   // Likes
+  likesText: ' likes',
   imageLikeFilledUrl: 'https://cdn-icons-png.flaticon.com/128/633/633991.png',
   imageLikeEmptyUrl: 'https://cdn-icons-png.flaticon.com/128/126/126473.png',
+  likeConfirmationMessage: 'Merci d’avoir partagé un j’aime pour le tronçons: ',
+  removeLikeConfirmationMessage: 'Vous avez retiré un j’aime pour le tronçons: ',
 
   // Map
   mapUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   attribution: '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-  zoomValue: 8,
-  polylineDefaultColor: 'green'
+  zoomValue: 13.5,
+  polylineDefaultColor: 'green',
+
+  // Erreurs
+  parksError: 'Erreur dans le chargement des parcs',
+  trailsError: 'Erreur dans le chargement des sentiers',
+  likesError: 'Erreur dans le chargement des likes',
+  segmentsError: 'Erreur dans le chargement des tronçons'
 
 }
 

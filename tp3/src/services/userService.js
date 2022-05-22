@@ -24,9 +24,9 @@ async function likeTrail (userId, trailId) {
   }
 }
 
-async function removeUserLike (userId) {
+async function removeUserLike (id) {
   try {
-    const response = await requestInterceptor.delete(`${API}/api/likes/${userId}`)
+    const response = await requestInterceptor.delete(`${API}/api/likes/${id}`)
     return response.data
   } catch (error) {
     throw parseAxiosErrorToAppError(error)

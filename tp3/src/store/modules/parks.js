@@ -3,8 +3,7 @@ import { parkService } from '@/services/parkService'
 const state = {
   parks: [],
   selectedPark: {},
-  parkServiceError: '',
-  onError: false
+  errorMessage: ''
 }
 
 const getters = {
@@ -17,26 +16,23 @@ const getters = {
   },
   getSelectedPark: state => {
     return state.selectedPark
+  },
+  getErrorMessage: state => {
+    return state.errorMessage
   }
 }
 
 const mutations = {
   initialiseParks: (state, parks) => {
     state.parks = parks
-    state.onError = false
+    state.errorMessage = ''
   },
   savePark (state, park) {
     state.selectedPark = park
-    console.log(state.selectedPark.id)
-    state.onError = false
+    state.errorMessage = ''
   },
-  updatePark: (state, park) => {
-    const index = state.parks.findIndex(t => t.id === park.id)
-    state.parks.splice(index, 1, park)
-    state.parks = [...state.parks]
-  },
-  setOnError (state) {
-    state.onError = true
+  setOnError (state, error) {
+    state.errorMessage = error
   }
 }
 
@@ -46,9 +42,7 @@ const actions = {
       const parks = await parkService.getParks()
       commit('initialiseParks', parks)
     } catch (error) {
-      // Il n'est pas nécessaire de relancer l'exception. Ce qui importe c'est que le composant soit informé que l'état de postStore est en erreur.
-      console.log(error)
-      commit('setOnError')
+      commit('setOnError', error)
     }
   }
 }

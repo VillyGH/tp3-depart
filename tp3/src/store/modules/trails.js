@@ -1,18 +1,15 @@
 import { trailService } from '@/services/trailService'
+import uiTextPlugin from '../../externalization/uiTextPlugin'
 
 const state = {
   trails: [],
   selectedTrail: {},
   selectedPark: {},
   trailSegments: [],
-  onError: false
+  errorMessage: ''
 }
 
 const getters = {
-  getTrailById: state => id => {
-    const trail = state.trails.find(trail => trail.id === id)
-    return trail
-  },
   getTrails: state => {
     return state.trails
   },
@@ -21,29 +18,30 @@ const getters = {
   },
   getTrailSegments: state => {
     return state.trailSegments
+  },
+  getErrorMessage: state => {
+    return state.errorMessage
   }
 }
 
 const mutations = {
   initialiseTrails: (state, trails) => {
     state.trails = trails
-    state.onError = false
+    if (trails.length === 0) {
+      state.errorMessage = uiTextPlugin.noTrailsAvailableMessage
+    } else {
+      state.errorMessage = ''
+    }
   },
   saveTrail (state, trail) {
-    console.log(trail.id)
     state.selectedTrail = trail
-  },
-  updateTrail: (state, trail) => {
-    const index = state.trails.findIndex(t => t.id === trail.id)
-    state.trails.splice(index, 1, trail)
-    state.trails = [...state.trails]
   },
   initialiseSegments: (state, segments) => {
     state.trailSegments = segments
-    state.onError = false
+    state.errorMessage = ''
   },
-  setOnError (state) {
-    state.onError = true
+  setOnError (state, error) {
+    state.errorMessage = error
   }
 }
 
@@ -53,7 +51,7 @@ const actions = {
       const trails = await trailService.getParkTrails(id)
       commit('initialiseTrails', trails)
     } catch (error) {
-      commit('setOnError')
+      commit('setOnError', error)
     }
   },
   async getTrailSegmentsAction ({ commit }, id) {
@@ -61,7 +59,7 @@ const actions = {
       const segments = await trailService.getTrailSegments(id)
       commit('initialiseSegments', segments)
     } catch (error) {
-      commit('setOnError')
+      commit('setOnError', error)
     }
   }
 }

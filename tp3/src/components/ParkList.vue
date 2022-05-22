@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class="ml-5">
+    <label for="parkNames" class="ml-2">{{ parksLabel }} </label>
     <select
-      class="mt-2 form-select form-select-lg"
+      class="mt-2 ml-3 form-select form-select-lg"
       name="parkNames"
       id="parkNames"
       v-model="firstParkName"
@@ -11,7 +12,7 @@
         {{ park.name }}
       </option>
     </select>
-    <div v-if="onError" class="error">{{ parkServiceError }}</div>
+    <div>{{ errorMessage }}</div>
   </div>
 </template>
 
@@ -21,6 +22,7 @@ export default {
   name: 'ParkList',
   data () {
     return {
+      parksLabel: uiTextPlugin.parksLabel,
       park: {},
       firstParkName: '',
       parks: [],
@@ -53,8 +55,10 @@ export default {
         this.$store.commit('parks/savePark', newPark)
       }
     },
-    onError () {
-      return this.$store.state.parks.onError
+    errorMessage: {
+      get () {
+        return this.$store.getters['parks/getErrorMessage']
+      }
     }
   }
 }
