@@ -17,7 +17,6 @@ async function likeTrail (userId, trailId) {
     trailId: trailId
   }
   try {
-    console.log(infos)
     const response = await requestInterceptor.post(`${API}/api/likes/`, infos)
     return response.data
   } catch (error) {
@@ -25,9 +24,8 @@ async function likeTrail (userId, trailId) {
   }
 }
 
-async function removeLUserike (userId) {
+async function removeUserLike (userId) {
   try {
-    // console.log(userId)
     const response = await requestInterceptor.delete(`${API}/api/likes/${userId}`)
     return response.data
   } catch (error) {
@@ -38,5 +36,5 @@ async function removeLUserike (userId) {
 export const userService = {
   getUserLikes,
   likeTrail,
-  removeLUserike
+  removeUserLike
 }

@@ -23,8 +23,8 @@ describe('ParkList.vue', () => {
       .find('option')
       .wrappers.map(option => option.element.value)
 
-    const parkNames = trails.map(trail => trail.name)
-    expect(parks).toEqual(optionsValue)
+    const parkNames = parks.map(park => park.name)
+    expect(parkNames).toEqual(optionsValue)
   })
   test('À l’ouverture, le premier parc devrait être celui selectionné', async () => {
     const wrapper = shallowMount(ParkList)

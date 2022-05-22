@@ -64,7 +64,7 @@ const actions = {
     try {
       if (state.nbTrailLiked !== 0) {
         const userId = parseInt(rootGetters['authentication/getTokenUserId'])
-        await userService.removeLUserike(userId)
+        await userService.removeUserLike(userId)
         commit('setTrailLiked', false)
       }
     } catch (error) {

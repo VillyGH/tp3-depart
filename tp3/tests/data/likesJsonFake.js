@@ -1,4 +1,4 @@
-export const parksJsonFake = [
+export const likesJsonFake = [
     {
         "userId": 1,
         "trailId": 1
@@ -8,11 +8,11 @@ export const parksJsonFake = [
         "trailId": 4
     },
     {
-        "userId": 2,
+        "userId": 3,
         "trailId": 3
     },
     {
         "userId": 4,
-        "trailId": 1
+        "trailId": 5
     },
 ]

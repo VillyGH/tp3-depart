@@ -1,9 +1,9 @@
 ####################################################################
-# /api/register et /api/login 
+# /api/register et /api/login
 ####################################################################
 
 ### Créer un utilisateur
-### Pour la création d'un utilisateur, le id ne devrait pas être dans les données envoyées. 
+### Pour la création d'un utilisateur, le id ne devrait pas être dans les données envoyées.
 ### Le id est créé par l'API REST et est présent dans le token.
 ### Pour manipuler un token, voir fichier tokenHelper.js du projet exemple-auth.
 ### Ci-dessous le id est ajouté pour simplifier la création, mais en réalité ce n'est pas au client de gérer la création d'un id.
@@ -18,7 +18,7 @@ content-type: application/json
   "role": "user"
 }
 
-### Récupérer un jeton 
+### Récupérer un jeton
 POST http://localhost:3000/api/login
 content-type: application/json
 
@@ -34,18 +34,18 @@ content-type: application/json
 GET http://localhost:3000/api/users/99999
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2MTk0NzA0NTIsImV4cCI6MTYxOTQ3NDA1Miwic3ViIjoiOTk5OTkifQ.VzbKkMZSXLvfJBt6VM_yyvjFWaz9VUvIoSUXVOsIWhU
 
-### Les "j'aime" d'un utilisateur  
+### Les "j'aime" d'un utilisateur
 GET http://localhost:3000/api/users/99999/likes
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2MTk0NzA0NTIsImV4cCI6MTYxOTQ3NDA1Miwic3ViIjoiOTk5OTkifQ.VzbKkMZSXLvfJBt6VM_yyvjFWaz9VUvIoSUXVOsIWhU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2NTMxODcwOTMsImV4cCI6MTY1MzE5MDY5Mywic3ViIjoiOTk5OTkifQ.hoqRhe-C0jS3sn9HDZHxJ_-5R3FHCHLkJQcXTrte9kI
 
 
 ####################################################################
 # /api/likes
 ####################################################################
 
-### Ajouter un "j'aime" à un utilisateur 
+### Ajouter un "j'aime" à un utilisateur
 POST http://localhost:3000/api/likes
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2MTk0NzA0NTIsImV4cCI6MTYxOTQ3NDA1Miwic3ViIjoiOTk5OTkifQ.VzbKkMZSXLvfJBt6VM_yyvjFWaz9VUvIoSUXVOsIWhU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2NTMxODcwOTMsImV4cCI6MTY1MzE5MDY5Mywic3ViIjoiOTk5OTkifQ.hoqRhe-C0jS3sn9HDZHxJ_-5R3FHCHLkJQcXTrte9kI
 content-type: application/json
 
 {
@@ -53,6 +53,6 @@ content-type: application/json
     "trailId": 246
 }
 
-### supprimer un "j'aime" d'un utilisateur 
-DELETE  http://localhost:3000/api/likes/996
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2MTk0NzA0NTIsImV4cCI6MTYxOTQ3NDA1Miwic3ViIjoiOTk5OTkifQ.VzbKkMZSXLvfJBt6VM_yyvjFWaz9VUvIoSUXVOsIWhU
+### supprimer un "j'aime" d'un utilisateur
+DELETE  http://localhost:3000/api/likes/99999
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2NTMxODcwOTMsImV4cCI6MTY1MzE5MDY5Mywic3ViIjoiOTk5OTkifQ.hoqRhe-C0jS3sn9HDZHxJ_-5R3FHCHLkJQcXTrte9kI
