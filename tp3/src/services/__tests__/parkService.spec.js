@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { parkService } from '@/services/parkService'
+import requestInterceptor from '@/shared/requestInterceptor'
 import MockAdapter from 'axios-mock-adapter'
 import { parkJsonFake } from '../../../tests/data/parkJsonFake'
 
@@ -27,7 +28,7 @@ describe('parkService.js', () => {
   })
 
   test('getParksById doit retourner le parc avec l’id correspondant', async () => {
-    mockAxios.onGet(`${API}/api/park`, firstPark.id).reply(201, firstPark)
+    mockAxios.onGet(`${API}/api/parks/${firstPark.id}`).reply(201, firstPark)
 
     const response = await parkService.getParkById(firstPark.id)
 

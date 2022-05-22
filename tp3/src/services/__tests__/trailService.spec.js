@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { trailService } from '@/services/trailService'
+import { trailService } from '../trailService'
 import MockAdapter from 'axios-mock-adapter'
 import { trailJsonFake } from '../../../tests/data/trailJsonFake'
 
@@ -11,7 +11,6 @@ let trails
 let segments
 let firstTrail
 
-
 beforeEach(() => {
   trails = [...trailJsonFake]
   firstTrail = trails[0]
@@ -22,15 +21,15 @@ beforeEach(() => {
 
 describe('trailService.js', () => {
   test('getTrails doit retourner l’ensemble des sentiers', async () => {
-    mockAxios.onGet(`${API}/api/trails`).reply(200, trails)
-
-    const response = await trailService.getParkTrails()
+    mockAxios.onGet(`${API}/api/parks/1/trails`).reply(200, trails)
+    const ANY_ID = 1
+    const response = await trailService.getParkTrails(ANY_ID)
 
     expect(response).toStrictEqual(trails)
   })
 
   test('getTrailsById doit retourner les sentier avec l’id correspondant', async () => {
-    mockAxios.onGet(`${API}/api/trail`, firstTrail.id).reply(200, firstTrail)
+    mockAxios.onGet(`${API}/api/trails/${firstTrail.id}`).reply(200, firstTrail)
 
     const response = await trailService.getTrailById(firstTrail.id)
 
@@ -38,7 +37,7 @@ describe('trailService.js', () => {
   })
 
   test('getTrailsSegments doit retourner les segments du sentier avec l’id correspondant', async () => {
-    mockAxios.onGet(`${API}/api/segments`, firstTrail.id).reply(200, segments)
+    mockAxios.onGet(`${API}/api/segments/${firstTrail.id}`).reply(200, segments)
 
     const response = await trailService.getTrailSegments(firstTrail.id)
 

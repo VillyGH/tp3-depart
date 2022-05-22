@@ -7,7 +7,11 @@
       v-model="firstTrailName"
       v-on:change="saveId($event)"
     >
-      <option class="form-option-lg" v-for="trail in trails" v-bind:key="trail.id">
+      <option
+        class="form-option-lg"
+        v-for="trail in trails"
+        v-bind:key="trail.id"
+      >
         {{ trail.name }}
       </option>
     </select>
