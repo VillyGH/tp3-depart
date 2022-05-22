@@ -1,4 +1,4 @@
-import { loginJsonFake } from '@/tests/data/loginJsonFake'
+import { loginJsonFake } from '../../../tests/data/loginJsonFake'
 import { authService } from '@/services/authService.js'
 import authentification from '@/store/modules/authentification.js'
 

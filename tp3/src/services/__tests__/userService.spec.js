@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { userService } from '@/services/userService'
+import { userService } from '../userService'
+import requestInterceptor from '@/shared/requestInterceptor'
 import MockAdapter from 'axios-mock-adapter'
 import { userJsonFake } from '../../../tests/data/userJsonFake'
 import { likesJsonFake } from '../../../tests/data/likesJsonFake'
@@ -39,7 +40,7 @@ describe('userService.js', () => {
   test('likeTrail doit ajouter un like sur le trail correspondant', async () => {
     mockAxios.onPost(`${API}/api/likes`).reply(200, like)
 
-    const response = await userService.likeTrail(infos)
+    const response = await userService.likeTrail(infos.userId, infos.trailId)
 
     expect(response).toStrictEqual(like)
   })
