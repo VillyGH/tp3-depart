@@ -24,9 +24,8 @@ const mutations = {
     state.onError = false
   },
   checkIfTrailLiked: (state, userId) => {
-    console.log(userId)
-    state.likes.array.forEach(like => {
-      if (like.userId === userId) {
+    state.likes.forEach(like => {
+      if (like.userId === parseInt(userId)) {
         state.isTrailLiked = true
       }
     })

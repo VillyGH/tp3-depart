@@ -31,7 +31,9 @@ export default {
     async initiateSegments () {
       await this.$store.dispatch('trails/getTrailSegmentsAction', this.selectedTrail.id)
       const coordinates = this.$store.getters['trails/getTrailSegments'].coordinates
-      this.polyline.latlngs = Object.entries(coordinates).map(([lat, lng]) => ({ lat, lng }))
+      const arrayOfcoordinates = []
+      arrayOfcoordinates.push(coordinates)
+      this.polyline.latlngs = arrayOfcoordinates
       console.log(this.polyline.latlngs)
       this.center = this.polyline.latlngs[0]
     },

@@ -34,7 +34,6 @@ export default {
         await this.$store.dispatch('likes/removeUserLikeAction')
         this.imageLikeUrl = uiTextPlugin.imageLikeEmptyUrl
       }
-      this.isTrailLiked = !this.isTrailLiked
     }
   },
   computed: {
@@ -51,17 +50,11 @@ export default {
     nbTrailLikes: {
       get () {
         return this.$store.getters['likes/getNbTrailLikes']
-      },
-      set (newValue) {
-        this.$store.commit('likes/initiateTrailLikes')
       }
     },
     isTrailLiked: {
       get () {
         return this.$store.getters['likes/isTrailLiked']
-      },
-      set (newValue) {
-
       }
     },
     onError () {
