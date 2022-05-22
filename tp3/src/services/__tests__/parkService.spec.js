@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { parkService } from '@/services/parkService'
-import requestInterceptor from '@/shared/requestInterceptor'
 import MockAdapter from 'axios-mock-adapter'
 import { parkJsonFake } from '../../../tests/data/parkJsonFake'
 
