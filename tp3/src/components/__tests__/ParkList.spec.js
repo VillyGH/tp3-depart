@@ -3,7 +3,6 @@ import { when, resetAllWhenMocks } from 'jest-when'
 import ParkList from '@/components/ParkList.vue'
 import { parksJsonFake } from '@/../tests/data/parkJsonFake'
 import uiTextPlugin from '../../externalization/uiTextPlugin'
-import flushPromises from 'flush-promises'
 
 let store
 let parks
