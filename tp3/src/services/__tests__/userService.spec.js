@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { userService } from '@/services/userService'
+import { userService } from '../userService'
+import requestInterceptor from '@/shared/requestInterceptor'
 import MockAdapter from 'axios-mock-adapter'
 import { userJsonFake } from '../../../tests/data/userJsonFake'
 
@@ -26,8 +27,9 @@ beforeEach(() => {
 describe('userService.js', () => {
   test('likeTrail doit ajouter un like sur le trail correspondant', async () => {
     mockAxios.onGet(`${API}/api/users`).reply(200, users)
+    mockAxios.onPost(`${API}/api/likes/`, infos).reply(200, users)
 
-    const response = await userService.likeTrail(infos)
+    const response = await userService.likeTrail(infos.userId, infos.trailId)
 
     expect(response).toStrictEqual(users)
   })
@@ -43,7 +45,7 @@ describe('userService.js', () => {
     const id = 0
     mockAxios.onGet(`${API}/api/user`, id).reply(201, firstUser)
 
-    const response = await userService.removeLikeTrail(id)
+    const response = await userService.removeLUserike(id)
 
     expect(response).toStrictEqual(park)
   })
