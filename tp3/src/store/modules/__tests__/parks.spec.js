@@ -43,6 +43,17 @@ describe('Authentification', () => {
 
       expect(park).toStrictEqual(parksArray[0])
     })
+    test('getErrorMessage doit retourner le bon message', async () => {
+      const state = {
+        parks: [...parkJsonFake],
+        selectedPark: parksArray[0],
+        errorMessage: 'error'
+      }
+
+      const error = parks.getters.getErrorMessage(state)
+
+      expect(error).toStrictEqual('error')
+    })
   })
   describe('mutations', () => {
     test('initialiseParks doit initialiser les parks', async () => {
@@ -61,12 +72,12 @@ describe('Authentification', () => {
     })
     test("setOnError doit mettre l'état en erreur", async () => {
       const state = {
-        onError: false
+        errorMessage: ''
       }
 
-      parks.mutations.setOnError(state)
+      parks.mutations.setOnError(state, 'error')
 
-      expect(state.onError).toStrictEqual(true)
+      expect(state.errorMessage).toStrictEqual('error')
     })
   })
   describe('actions', () => {
@@ -86,7 +97,7 @@ describe('Authentification', () => {
         await parks.actions.getAllParkAction({ commit })
       } catch (e) {}
 
-      expect(commit).toHaveBeenCalledWith('setOnError')
+      expect(commit).toHaveBeenCalledWith('setOnError', new Error())
     })
   })
 })

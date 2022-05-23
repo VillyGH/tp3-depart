@@ -5,6 +5,7 @@ import { loginJsonFake } from '../../../tests/data/loginJsonFake'
 import { registerJsonFake } from '../../../tests/data/registerJsonFake'
 
 var mockAxios = new MockAdapter(axios)
+jest.mock('@/services/authService')
 
 const API = process.env.VUE_APP_API
 
@@ -32,9 +33,6 @@ describe('authService.js', () => {
         password: firstlogin.password
       })
       .reply(200, token)
-
-    /*const getAccessTokenMock = jest.fn(getAccessToken);
-      getAccessTokenMock.mockReturnValue("token");*/
     const response = await authService.getToken(firstlogin)
 
     expect(response).toStrictEqual(token)

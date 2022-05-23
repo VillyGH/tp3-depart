@@ -75,8 +75,7 @@ describe('NavigationBar.vue', () => {
 
   test('Doit contenir un bouton se déconnecter lorsque connecté.', async () => {
     const wrapper = shallowMount(NavigationBar)
-    const logOutButton = wrapper
-      .find('b-link.logout')
+    const logOutButton = wrapper.find('b-link.logout')
 
     expect(logOutButton).not.toBeUndefined()
   })
