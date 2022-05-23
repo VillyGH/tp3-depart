@@ -6,6 +6,7 @@ jest.mock('@/views/WelcomePage.vue')
 jest.mock('@/views/login/Login.vue')
 jest.mock('@/views/register/Register.vue')
 
+let name
 describe('NavigationBar.vue', () => {
   test('Doit contenir un lien sur la page d’acceuil.', async () => {
     const wrapper = shallowMount(NavigationBar, {
@@ -59,10 +60,10 @@ describe('NavigationBar.vue', () => {
         RouterLink: RouterLinkStub
       },
       computed: {
-        isLoggedIn() {
-          return true;
-        },
-    },
+        isLoggedIn () {
+          return true
+        }
+      }
     })
     const routerLinks = wrapper
       .findAllComponents(RouterLinkStub)
@@ -83,9 +84,9 @@ describe('NavigationBar.vue', () => {
   test('Ne doit pas contenir un lien de connection lorsque connecté.', async () => {
     const wrapper = shallowMount(NavigationBar, {
       computed: {
-        isLoggedIn() {
-          return true;
-        },
+        isLoggedIn () {
+          return true
+        }
       },
       stubs: {
         RouterLink: RouterLinkStub
@@ -105,9 +106,9 @@ describe('NavigationBar.vue', () => {
       stubs: {
         RouterLink: RouterLinkStub
       },
-      isLoggedIn() {
-        return true;
-      },
+      isLoggedIn () {
+        return true
+      }
     })
     const routerLinks = wrapper
       .findAllComponents(RouterLinkStub)
