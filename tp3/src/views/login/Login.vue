@@ -12,7 +12,7 @@
         >
       </b-form>
 
-      <div v-if="authServiceError">{{ authServiceError }}</div>
+      <div class="error" v-if="authServiceError">{{ authServiceError }}</div>
     </b-container>
   </div>
 </template>

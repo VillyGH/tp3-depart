@@ -1,13 +1,10 @@
 import { shallowMount, RouterLinkStub } from '@vue/test-utils'
 import NavigationBar from '@/components/NavigationBar.vue'
 
-jest.mock('@/views/Posts.vue')
-
-let isLoggedIn = false
-
-beforeEach(() => {
-  resetAllWhenMocks()
-})
+jest.mock('@/views/Map.vue')
+jest.mock('@/views/WelcomePage.vue')
+jest.mock('@/views/login/Login.vue')
+jest.mock('@/views/register/Register.vue')
 
 describe('NavigationBar.vue', () => {
   test('Doit contenir un lien sur la page d’acceuil.', async () => {
@@ -57,12 +54,15 @@ describe('NavigationBar.vue', () => {
   })
 
   test('Doit contenir un lien sur la page de la carte lorsque connecté.', async () => {
-    isLoggedIn = true
-    store = createMockStore()
     const wrapper = shallowMount(NavigationBar, {
       stubs: {
         RouterLink: RouterLinkStub
-      }
+      },
+      computed: {
+        isLoggedIn() {
+          return true;
+        },
+    },
     })
     const routerLinks = wrapper
       .findAllComponents(RouterLinkStub)
@@ -74,7 +74,6 @@ describe('NavigationBar.vue', () => {
   })
 
   test('Doit contenir un bouton se déconnecter lorsque connecté.', async () => {
-    isLoggedIn = true
     const wrapper = shallowMount(NavigationBar)
     const logOutButton = wrapper
       .find('b-link.logout')
@@ -83,9 +82,12 @@ describe('NavigationBar.vue', () => {
   })
 
   test('Ne doit pas contenir un lien de connection lorsque connecté.', async () => {
-    isLoggedIn = true
-    store = createMockStore()
     const wrapper = shallowMount(NavigationBar, {
+      computed: {
+        isLoggedIn() {
+          return true;
+        },
+      },
       stubs: {
         RouterLink: RouterLinkStub
       }
@@ -100,12 +102,13 @@ describe('NavigationBar.vue', () => {
   })
 
   test('Ne doit pas contenir un lien d’inscription lorsque connecté.', async () => {
-    isLoggedIn = true
-    store = createMockStore()
     const wrapper = shallowMount(NavigationBar, {
       stubs: {
         RouterLink: RouterLinkStub
-      }
+      },
+      isLoggedIn() {
+        return true;
+      },
     })
     const routerLinks = wrapper
       .findAllComponents(RouterLinkStub)
@@ -116,19 +119,3 @@ describe('NavigationBar.vue', () => {
     })
   })
 })
-function createMockStore () {
-  const store = {
-    getters: {
-      //  ___ module "posts" dans le store.
-      // |       ___ getter "getPostById" du module "posts"
-      // V      V
-      'authentication/isLoggedIn': isLoggedIn
-      // Pourrait fonctionner, mais manque de précision. C'est pourquoi on utilise le when ci-dessus.
-      // getPostById: () => {
-      //   return { ...posts[0] }
-      // }
-    },
-    dispatch: jest.fn()
-  }
-  return store
-}

@@ -12,7 +12,7 @@
         {{ park.name }}
       </option>
     </select>
-    <div>{{ errorMessage }}</div>
+    <div class="error">{{ errorMessage }}</div>
   </div>
 </template>
 

@@ -41,7 +41,7 @@ describe('ParkList.vue', () => {
 
   test('Si une erreur se produit lors de l’acquisition des données une erreur est affiché', async () => {
     const wrapper = shallowMount(ParkList)
-    store.state.onError = true
+    errorMessage = 'Message d’erreur'
     const errorMessage = wrapper.find('.error').text()
 
     expect(errorMessage).toEqual(uiTextPlugin.parksError)
@@ -59,7 +59,7 @@ function createMockStore () {
       parks: {
         parks: [...parksJsonFake],
         selectedPark: parks[0],
-        onError: false
+        errorMessage: ''
       }
     },
     getters: {

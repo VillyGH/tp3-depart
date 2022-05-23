@@ -1,23 +1,26 @@
+import { shallowMount } from '@vue/test-utils'
 import axios from 'axios'
 import { Login } from '@/views/login/Login'
 import MockAdapter from 'axios-mock-adapter'
-import AuthJsonFake from '@/views/__test__/data/authJsonFake'
+import { registerJsonFake } from '../../../tests/data/registerJsonFake'
 
 var mockAxios = new MockAdapter(axios)
 
-const API = process.env.VUE_APP_API
-
-let auth
+let registers
+let firstRegister
+let invalidRegister
 
 beforeEach(() => {
-  auth = [...AuthJsonFake]
+  registers = [...registerJsonFake]
+  firstRegister = registers[0]
+  invalidRegister = registers[1]
 
   mockAxios.reset()
 })
 
 describe('Login.vue', () => {
   test('Doit pouvoir envoyer les informations de l’authentification', async () => {
-    const wrapper = await shallowMount(Login, {
+    const wrapper = shallowMount(Login, {
       $router: {
         push: param => routerPush(param)
       }
@@ -35,14 +38,14 @@ describe('Login.vue', () => {
     // arrange
     const routerPush = jest.fn()
 
-    document.getElementById('email').innerHTML = auth.login.email
-    document.getElementById('password').innerHTML = auth.login.password
-
-    const wrapper = await shallowMount(Login, {
+    const wrapper = shallowMount(Login, {
       $router: {
         push: param => routerPush(param)
       }
     })
+
+    document.getElementById('email').innerHTML = firstRegister.email
+    document.getElementById('password').innerHTML = firstRegister.password
 
     await flushPromises()
     // act
@@ -55,14 +58,14 @@ describe('Login.vue', () => {
     // arrange
     const routerPush = jest.fn()
 
-    document.getElementById('email').innerHTML = auth.invalidLogin.email
-    document.getElementById('password').innerHTML = auth.invalidLogin.password
-
-    const wrapper = await shallowMount(Login, {
+    const wrapper = shallowMount(Login, {
       $router: {
         push: param => routerPush(param)
       }
     })
+
+    document.getElementById('email').innerHTML = invalidRegister.email
+    document.getElementById('password').innerHTML = invalidRegister.password
 
     await flushPromises()
     // act
@@ -75,14 +78,14 @@ describe('Login.vue', () => {
     // arrange
     const routerPush = jest.fn()
 
-    document.getElementById('email').innerHTML = auth.invalidLogin.email
-    document.getElementById('password').innerHTML = auth.invalidLogin.password
-
-    const wrapper = await shallowMount(Login, {
+    const wrapper = shallowMount(Login, {
       $router: {
         push: param => routerPush(param)
       }
     })
+
+    document.getElementById('email').innerHTML = invalidRegister.email
+    document.getElementById('password').innerHTML = invalidRegister.password
 
     await flushPromises()
     // act
